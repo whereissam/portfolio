@@ -2,7 +2,7 @@
 import Card from "./Card/index.astro";
 import Button from "./Button.astro";
 import { LINKS } from "../lib/constants";
-import { Icon } from 'astro-icon/components'
+import { Icon } from "astro-icon/components";
 import Tooltip from "./Tooltip/index";
 import { Image } from "astro:assets";
 ---
@@ -11,11 +11,10 @@ import { Image } from "astro:assets";
   <div class="flex w-full h-full">
     <div class="flex flex-col justify-between md:max-h-[300px] gap-4">
       <div class="flex flex-col h-full">
-        <h6 class="text-sm font-light m-0 text-gray-500">welcome</h6>
+        <h6 class="text-sm font-light m-0 text-gray-500">Welcome</h6>
         <p class="m-0 font-light text-xl">
-          Hi, I'm <b class="font-bold">Gianmarco Cavallo</b>, a software
-          developer with strong focus on the user experience, animations and
-          micro interactions
+          Hi, I'm <b class="font-bold">Sam</b>, a software developer with strong
+          focus on the user experience, animations and micro interactions
         </p>
       </div>
       <div class="flex gap-4">
@@ -31,10 +30,26 @@ import { Image } from "astro:assets";
             <span class="sr-only">Linkedin Profile</span>
           </Button>
         </a>
-        <a href={LINKS.dribble} aria-label="dribble profile" target="_blank">
+        <a href={LINKS.twitter} aria-label="linkedin profile" target="_blank">
+          <Button aria-label="twitter profile">
+            <Icon name="ri:twitter-fill" class="h-6" />
+            <span class="sr-only">Twitter Profile</span>
+          </Button>
+        </a>
+        <a href={LINKS.website} aria-label="linkedin profile" target="_blank">
+          <Button aria-label="website profile">
+            <Icon name="ri:twitter-fill" class="h-6" />
+            <span class="sr-only">website Profile</span>
+          </Button>
+        </a>
+        <a
+          href={LINKS.telegramChannel}
+          aria-label="dribble profile"
+          target="_blank"
+        >
           <Button aria-label="dribble profile">
-            <Icon name="ri:dribbble-fill" class="h-6" />
-            <span class="sr-only">Dribble Profile</span>
+            <Icon name="ri:telegram-fill" class="h-6" />
+            <span class="sr-only">Telegram Channel</span>
           </Button>
         </a>
         <Tooltip client:visible>
@@ -48,9 +63,9 @@ import { Image } from "astro:assets";
     <Image
       width="300"
       height="300"
-      src="/me.webp"
+      src="https://i.imgur.com/HAHvQte.jpg"
       class="w-auto max-h-[300px] select-none absolute right-[-110px] bottom-[-20px] z-[-1] opacity-50 md:opacity-100 md:relative md:right-auto md:bottom-auto md:z-auto pointer-events-none"
-      alt="memoji of gianmarco"
+      alt="memoji of sam"
     />
   </div>
 </Card>

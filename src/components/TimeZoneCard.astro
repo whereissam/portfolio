@@ -1,21 +1,36 @@
 ---
-import { getCurrentTimeInItaly, formatTimeForItaly } from "../lib/helpers";
+import { getCurrentTimeInGermany, formatTimeForGermany } from "../lib/helpers";
 import Card from "./Card/index.astro";
 ---
 
 <script>
   import { onCleanup, onMount } from "solid-js";
-  import { formatTimeForItaly } from "../lib/helpers";
+  import { formatTimeForGermany } from "../lib/helpers";
 
   let interval: ReturnType<typeof setInterval>;
 
   function updateClock() {
     const timeDisplay = document.getElementById("timeDisplay");
+    const tzExplanation = document.getElementById("tzExplanation");
     const now = new Date();
+    const isDST =
+      now.getTimezoneOffset() <
+      Math.max(
+        new Date(now.getFullYear(), 0, 1).getTimezoneOffset(),
+        new Date(now.getFullYear(), 6, 1).getTimezoneOffset()
+      );
 
     if (timeDisplay) {
-      timeDisplay.textContent = formatTimeForItaly(now);
-      timeDisplay.setAttribute("datetime", now.toISOString());
+      const formattedTime = formatTimeForGermany(now);
+      // Split time and timezone
+      const [time, tz] = formattedTime.split(" ");
+      timeDisplay.textContent = `${time} ${tz}`;
+
+      if (tzExplanation) {
+        tzExplanation.textContent = isDST
+          ? "(Central European Summer Time)"
+          : "(Central European Time)";
+      }
     }
   }
 
@@ -29,11 +44,32 @@ import Card from "./Card/index.astro";
 </script>
 
 <Card colSpan="lg:col-span-2" rowSpan="md:row-span-2" title="Time zone">
-  <time
-    datetime=""
-    id="timeDisplay"
-    class="text-2xl xl:text-5xl xl:whitespace-nowrap w-50 xl:w-100 h-[calc(100%-28px)] font-serif flex justify-center items-center"
-  >
-    {formatTimeForItaly(getCurrentTimeInItaly())}
-  </time>
+  <div class="flex items-center justify-center h-[calc(100%-28px)] gap-2">
+    <time
+      datetime=""
+      id="timeDisplay"
+      class="text-2xl xl:text-5xl whitespace-nowrap font-serif"
+    >
+      {formatTimeForGermany(getCurrentTimeInGermany())}
+    </time>
+    <span id="tzExplanation" class="text-sm text-neutral-600">
+      {
+        getCurrentTimeInGermany().getTimezoneOffset() <
+        Math.max(
+          new Date(
+            getCurrentTimeInGermany().getFullYear(),
+            0,
+            1
+          ).getTimezoneOffset(),
+          new Date(
+            getCurrentTimeInGermany().getFullYear(),
+            6,
+            1
+          ).getTimezoneOffset()
+        )
+          ? "(Central European Summer Time)"
+          : "(Central European Time)"
+      }
+    </span>
+  </div>
 </Card>

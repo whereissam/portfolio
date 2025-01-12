@@ -1,0 +1,83 @@
+---
+import Card from "./Card/index.astro";
+import ProjectCard from "./ProjectCard.astro";
+
+const web3Projects = [
+  {
+    title: "DoodleFish",
+    description:
+      "Telegram Mini App game on TON blockchain with crypto rewards and NFT trading. Implemented game logic and wallet integration.",
+    image: "/projects/doodlefish.png",
+    link: "#",
+    tags: ["Telegram Mini App", "TON", "Web3 Gaming", "NFT"],
+    category: "Web3",
+  },
+  {
+    title: "SenderOS AI",
+    description:
+      "AI-powered blockchain automation platform on Near blockchain using LangChain for transaction processing.",
+    image: "/projects/sender.png",
+    link: "#",
+    tags: ["Next.js", "Near", "OpenAI", "LangChain"],
+    category: "Web3",
+  },
+  {
+    title: "7007 Marketplace",
+    description:
+      "Web3 marketplace for AI model trading with smart contract integration for secure transactions.",
+    image: "/projects/7007.png",
+    link: "#",
+    tags: ["Next.js", "IPFS", "AI Models", "ERC7007"],
+    category: "Web3",
+  },
+];
+
+const web2Projects = [
+  {
+    title: "Rhino Shield Event Page",
+    description:
+      "Interactive product showcase landing page with dynamic features and animations.",
+    image: "/projects/rhino.png",
+    link: "#",
+    tags: ["Next.js", "Interactive Design"],
+    category: "Web2",
+  },
+  {
+    title: "Travel Management System",
+    description:
+      "Full-stack application for streamlined travel planning and management.",
+    image: "/projects/travel.png",
+    link: "#",
+    tags: ["React", "Node.js", "MongoDB"],
+    category: "Web2",
+  },
+];
+---
+
+<section class="w-full flex flex-col gap-8">
+  <div class="flex flex-col gap-4">
+    <h2 class="text-xl font-bold text-neutral-100">Web3 Projects</h2>
+    <div class="grid gap-4 grid-cols-1 md:grid-cols-2">
+      {
+        web3Projects.map((project) => (
+          <Card colSpan="md:col-span-1">
+            <ProjectCard {...project} />
+          </Card>
+        ))
+      }
+    </div>
+  </div>
+
+  <!-- <div class="flex flex-col gap-4">
+    <h2 class="text-xl font-bold text-neutral-100">Web2 Projects</h2>
+    <div class="grid gap-4 grid-cols-1 md:grid-cols-2">
+      {
+        web2Projects.map((project) => (
+          <Card colSpan="md:col-span-1">
+            <ProjectCard {...project} />
+          </Card>
+        ))
+      }
+    </div>
+  </div> -->
+</section>

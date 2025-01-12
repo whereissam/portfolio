@@ -1,0 +1,68 @@
+---
+interface Props {
+  title: string;
+  description: string;
+  tags: string[];
+  link?: string;
+  image?: string;
+  category: string;
+}
+
+const { title, description, tags, link, image, category } = Astro.props;
+---
+
+<article class="flex flex-col h-full p-4">
+  <header class="flex items-start justify-between mb-4">
+    <div>
+      <h3 class="text-lg font-medium text-neutral-100">
+        {title}
+        {
+          link && (
+            <a
+              href={link}
+              target="_blank"
+              class="inline-block ml-2 text-neutral-400 hover:text-neutral-200"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="12"
+                height="12"
+                viewBox="0 0 24 24"
+                fill="none"
+                stroke="currentColor"
+                stroke-width="2"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              >
+                <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                <polyline points="15 3 21 3 21 9" />
+                <line x1="10" y1="14" x2="21" y2="3" />
+              </svg>
+            </a>
+          )
+        }
+      </h3>
+      <p class="text-xs text-neutral-400 mt-1">{category}</p>
+    </div>
+  </header>
+
+  {
+    image && (
+      <div class="relative w-full h-48 mb-4 overflow-hidden rounded-lg">
+        <img src={image} alt={title} class="object-cover w-full h-full" />
+      </div>
+    )
+  }
+
+  <p class="text-sm text-neutral-300 mb-4 flex-grow">{description}</p>
+
+  <footer class="flex flex-wrap gap-2 mt-auto">
+    {
+      tags.map((tag) => (
+        <span class="px-2 py-1 text-xs bg-neutral-800 text-neutral-300 rounded-full">
+          {tag}
+        </span>
+      ))
+    }
+  </footer>
+</article>
