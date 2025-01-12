@@ -1,13 +1,5 @@
 # ⚡️astro-bento-portfolio
 
-## A personal portfolio website made using `Astro`.
-
-![astro-bento-portfolio | Bento-like Personal Porfolio Template](public/preview.png)
-
-To view a demo example, **[click here](https://sparkly-speculoos-0c9197.netlify.app/)**
-
-or my portfolio **[click here](https://gianmarcocavallo.com)**
-
 ## Features
 
 - Modern and Minimal bento-like, sleek UI Design
