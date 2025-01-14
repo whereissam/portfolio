@@ -43,122 +43,78 @@ const posts = (await getCollection("blog"))?.sort(
   title="Sam - Full-stack Developer"
   description="Full-stack developer based in Taiwan, specializing in blockchain and Web3 development."
 >
-  <main
-    class="text-white m-auto p-2 grid gap-2 max-w-6xl overflow-hidden relative w-full sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:h-screen lg:grid-cols-4 lg:gap-4"
-  >
-    <IntroCard />
-    <AboutMe />
-    <ContactsCard />
-    <TimeZone />
-    <Now />
-    <Card
-      colSpan="md:col-span-1"
-      rowSpan="md:row-span-1"
-      title="Countries I visited"
-      href="travel"
-      colorText="text-neutral-900"
+  <div class="h-full min-h-screen w-full bg-neutral-900">
+    <main
+      class="text-white mx-auto w-full max-w-6xl p-2 grid gap-2 sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:grid-cols-4 lg:gap-4"
     >
-      <div class="h-full w-full absolute inset-0 -z-10">
-        <Globe client:load />
-      </div>
-    </Card>
-    <Card
-      colSpan="md:col-span-1"
-      rowSpan="md:row-span-2"
-      title="Blog"
-      href="/blog"
-    >
-      <div class="flex flex-col gap-4">
-        {
-          posts?.slice(0, 3).map((post) => (
-            <div class="list-none w-full text-neutral-100 hover:text-neutral-400 ease-in-out transition-colors border-b-neutral-400 border-dashed border-b-1 my-0">
-              <p class="inline-block whitespace-nowrap text-xs">
-                {post.data.title}
-              </p>
-              {post.data.pubDate && (
-                <time
-                  class="text-right tabular-nums text-xs"
-                  datetime={post.data.pubDate.toISOString()}
-                >
-                  {formatDate(post.data.pubDate)}
-                </time>
-              )}
-            </div>
-          ))
-        }
-      </div>
-    </Card>
-    <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
-      <p class="text-xs">© 2025 · blockspace right reserve</p>
-    </Card>
-    <Card
-      colSpan="md:col-span-1"
-      rowSpan="md:row-span-2"
-      title="Featured Project"
-      href="/projects"
-    >
-      <div class="flex flex-col gap-4">
-        <div
-          class="list-none w-full text-neutral-100 hover:text-neutral-400 ease-in-out transition-colors border-b-neutral-400 border-dashed border-b-1 my-0"
-        >
-          <div class="flex justify-between items-center">
-            <p class="inline-block whitespace-nowrap text-xs">
-              DoodleFish [Web3]
-            </p>
-            <p class="text-right tabular-nums text-xs text-neutral-400">
-              Telegram Mini App, TON
-            </p>
-          </div>
+      <IntroCard />
+      <AboutMe />
+      <ContactsCard />
+      <TimeZone />
+      <Now />
+      <Card
+        colSpan="md:col-span-1"
+        rowSpan="md:row-span-1"
+        title="Countries I visited"
+        href="travel"
+        colorText="text-neutral-900"
+      >
+        <div class="h-full w-full absolute inset-0 -z-10">
+          <Globe client:load />
         </div>
-        <div
-          class="list-none w-full text-neutral-100 hover:text-neutral-400 ease-in-out transition-colors border-b-neutral-400 border-dashed border-b-1 my-0"
-        >
-          <div class="flex justify-between items-center">
-            <p class="inline-block whitespace-nowrap text-xs">
-              SenderOS AI [Web3]
-            </p>
-            <p class="text-right tabular-nums text-xs text-neutral-400">
-              Next.js, LangChain
-            </p>
-          </div>
+      </Card>
+      <Card
+        colSpan="md:col-span-1"
+        rowSpan="md:row-span-2"
+        title="Blog"
+        href="/blog"
+      >
+        <div class="flex flex-col gap-4">
+          {
+            posts?.slice(0, 3).map((post) => (
+              <div class="list-none w-full text-neutral-100 hover:text-neutral-400 ease-in-out transition-colors border-b-neutral-400 border-dashed border-b-1 my-0">
+                <p class="inline-block whitespace-nowrap text-xs">
+                  {post.data.title}
+                </p>
+                {post.data.pubDate && (
+                  <time
+                    class="text-right tabular-nums text-xs"
+                    datetime={post.data.pubDate.toISOString()}
+                  >
+                    {formatDate(post.data.pubDate)}
+                  </time>
+                )}
+              </div>
+            ))
+          }
         </div>
-        <div
-          class="list-none w-full text-neutral-100 hover:text-neutral-400 ease-in-out transition-colors border-b-neutral-400 border-dashed border-b-1 my-0"
-        >
-          <div class="flex justify-between items-center">
-            <p class="inline-block whitespace-nowrap text-xs">
-              7007 Marketplace [Web3]
-            </p>
-            <p class="text-right tabular-nums text-xs text-neutral-400">
-              Next.js, IPFS
-            </p>
-          </div>
+      </Card>
+      <Card colSpan="md:col-span-1" rowSpan="md:row-span-1">
+        <p class="text-xs">© 2025 · blockspace right reserve</p>
+      </Card>
+      <Card
+        colSpan="md:col-span-1 lg:col-span-4"
+        rowSpan="md:row-span-2"
+        title="Featured Project"
+        href="/projects"
+      >
+        <div class="flex flex-col gap-2">
+          {
+            [
+              ["DoodleFish [Web3]", "Telegram Mini App, TON"],
+              ["SenderOS AI [Web3]", "Next.js, LangChain"],
+              ["7007 Marketplace [Web3]", "Next.js, IPFS"],
+              ["Rhino Shield Event Page [Web2]", "Next.js, Interactive Design"],
+              ["Travel Management System [Web2]", "React, Node.js, MongoDB"],
+            ].map(([title, tech]) => (
+              <div class="flex justify-between items-center w-full text-neutral-100 hover:text-neutral-400 transition-colors border-b border-dashed border-neutral-400 pb-2">
+                <p class="text-xs">{title}</p>
+                <p class="text-xs text-neutral-400">{tech}</p>
+              </div>
+            ))
+          }
         </div>
-        <div
-          class="list-none w-full text-neutral-100 hover:text-neutral-400 ease-in-out transition-colors border-b-neutral-400 border-dashed border-b-1 my-0"
-        >
-          <div class="flex justify-between items-center">
-            <p class="inline-block whitespace-nowrap text-xs">
-              Rhino Shield Event Page [Web2]
-            </p>
-            <p class="text-right tabular-nums text-xs text-neutral-400">
-              Next.js, Interactive Design
-            </p>
-          </div>
-        </div>
-        <div
-          class="list-none w-full text-neutral-100 hover:text-neutral-400 ease-in-out transition-colors border-b-neutral-400 border-dashed border-b-1 my-0"
-        >
-          <div class="flex justify-between items-center">
-            <p class="inline-block whitespace-nowrap text-xs">
-              Travel Management System [Web2]
-            </p>
-            <p class="text-right tabular-nums text-xs text-neutral-400">
-              React, Node.js, MongoDB
-            </p>
-          </div>
-        </div>
-      </div>
-    </Card>
-  </main>
+      </Card>
+    </main>
+  </div>
 </Layout>
