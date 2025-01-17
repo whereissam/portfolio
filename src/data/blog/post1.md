@@ -1,18 +1,13 @@
 ---
-title: "Hello, World"
-description: "this is a post example"
-pubDate: 2023-01-21
-category: "intro"
+title: "About the project I do for now"
+description: ""
+pubDate: 2025-01-18
+category: "project"
 draft: false
 ---
 
 # Hi there!
 
-This Markdown file creates a page at `your-domain.com/blog/post1/`
+This is a blog post.
 
-It probably isn't styled much, but Markdown does support:
-
-- **bold** and _italics._
-- lists
-- [links](https://astro.build)
-- and more!
+I was freelancer right now. I do some of the project but they all failed. So will see my web3 project all don't have links. In the future, I will make a new project.
