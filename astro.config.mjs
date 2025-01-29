@@ -5,7 +5,9 @@ import robotsTxt from "astro-robots-txt";
 import UnoCSS from "@unocss/astro";
 import icon from "astro-icon";
 import vercel from '@astrojs/vercel';
-
+import mdx from '@astrojs/mdx';
+import tailwind from '@astrojs/tailwind';
+import react from '@astrojs/react';
 import solidJs from "@astrojs/solid-js";
 import { remarkReadingTime } from "./src/lib/remark-reading-time.mjs";
 
@@ -30,8 +32,16 @@ export default defineConfig({
     UnoCSS({ injectReset: true }),
     icon(),
     svelte(),
+    mdx(),
+    react(),
+    tailwind({
+      applyBaseStyles: false,
+    }),
   ],
   markdown: {
+    remarkPlugins: [remarkReadingTime],
+  },
+  mdx: {
     remarkPlugins: [remarkReadingTime],
   },
   vite: {

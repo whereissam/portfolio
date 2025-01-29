@@ -9,6 +9,7 @@ import Now from "../components/Now.astro";
 import Globe from "../components/Globe";
 import { getCollection } from "astro:content";
 import { formatDate } from "../lib/helpers";
+import "@/styles/globals.css";
 
 const posts = (await getCollection("blog"))?.sort(
   (blogEntryA, blogEntryB) =>
