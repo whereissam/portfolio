@@ -10,7 +10,7 @@ const GlobeComponent = () => {
     "China",
     "Taiwan",
     "Japan",
-    "Korea",
+    "South Korea",
     "Belgium",
     "Netherlands",
     "Thailand",
