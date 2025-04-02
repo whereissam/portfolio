@@ -4,6 +4,7 @@ import Button from "./Button.astro";
 import { LINKS } from "../lib/constants";
 import { Icon } from "astro-icon/components";
 import Tooltip from "./Tooltip/index";
+// import HoverTooltip from "./HoverTooltip/index";
 import { Image } from "astro:assets";
 ---
 
@@ -42,6 +43,15 @@ import { Image } from "astro:assets";
             <span class="sr-only">website Profile</span>
           </Button>
         </a>
+        <!-- <HoverTooltip client:visible text="My Tools"> -->
+        <!-- <a href={LINKS.website} aria-label="tool profile" target="_blank">
+          <Button aria-label="tool site">
+            <Icon name="ri:tools-line" class="h-6" />
+            <span class="sr-only">Tool site</span>
+          </Button>
+        </a> -->
+        <!-- </HoverTooltip> -->
+
         <a
           href={LINKS.telegramChannel}
           aria-label="telegram channel"
@@ -64,7 +74,7 @@ import { Image } from "astro:assets";
       <Image
         width="200"
         height="200"
-        src="https://i.imgur.com/HAHvQte.jpg"
+        src="/public/selfphoto.png"
         class="w-auto max-h-[300px] rounded-full select-none opacity-50 md:opacity-100 transition-opacity duration-300 pointer-events-none object-contain"
         alt="memoji of sam"
       />
