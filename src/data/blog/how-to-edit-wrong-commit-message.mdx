@@ -1,0 +1,125 @@
+---
+title: "Oops! Pushing Commits with the Wrong Git Username? Here's How to Fix It"
+description: "Accidentally committed with the wrong Git username? This guide provides a step-by-step solution using Git's interactive rebase to correct the author information of your past commits on GitHub."
+pubDate: 2025-05-17
+category: "Development"
+draft: false
+---
+
+We've all been there. You're in the flow, committing your amazing code, and then you realize – your Git username (or email) is incorrect on your latest (or not-so-latest) commits. Maybe you just set up a new machine, or perhaps you accidentally used a different configuration. Whatever the reason, having the wrong author information in your commit history can be a minor annoyance or even a problem for tracking contributions.
+
+Fear not! Git provides powerful tools to rewrite history (use with caution!), allowing you to correct this. This article will guide you through the steps to fix commits pushed with the wrong username on GitHub.
+
+## Understanding the Problem
+
+When you make a commit, Git records the author and committer information based on your local Git configuration. If this configuration is incorrect, that wrong information becomes a permanent part of the commit history – both locally and on your remote repository (like GitHub) once you push.
+
+## The Solution: Interactive Rebase to the Rescue
+
+For commits that have already been pushed, the most effective way to change the author is using Git's interactive rebase feature. This allows you to go back and modify existing commits.
+
+**Important Note:** Rewriting history on shared branches can be disruptive for collaborators. If you're working alone on a branch, or if you've discussed this with your team, proceed with caution.
+
+Here's how to do it:
+
+1.  **Initiate Interactive Rebase:** Open your terminal in your local repository and run the interactive rebase command. You'll need to determine how far back in your history you need to go to include the commits with the wrong username.
+
+    * **If the incorrect commits are recent:** You can rebase onto the `origin/<your_branch_name>` branch (e.g., `origin/main` or `origin/dev-layout`).
+
+        ```bash
+        git rebase -i origin/<your_branch_name>
+        ```
+
+    * **To target a specific commit before the incorrect ones:** Use the `^` notation to specify the commit before the first one you want to edit. You can find the commit hashes using `git log --oneline`.
+
+        ```bash
+        git rebase -i <hash_of_commit_before_incorrect_ones>^
+        ```
+
+    * **To rebase from the very beginning of your branch:**
+
+        ```bash
+        git rebase -i --root
+        ```
+
+2.  **Mark Commits for Editing:** The rebase command will open a text editor. The appearance and controls will depend on your default Git editor (often Vim or Nano). You'll see a list of your commits. Find the lines corresponding to the commits with the wrong username. You need to change the word `pick` at the beginning of each of those lines to `edit` (or just `e`).
+
+    **For Vim (a common Git editor):**
+
+    * Press the `i` key to enter **Insert Mode**. You should see `-- INSERT --` at the bottom of the Vim window.
+    * Use the arrow keys (`↑`, `↓`, `←`, `→`) to navigate to the line you want to change.
+    * Move the cursor over the `p` in `pick` and type `e`. You can overwrite the entire word `pick` if you prefer.
+    * Once you've changed `pick` to `edit` (or just `e`) for all the incorrect commits, press the `Esc` key to exit **Insert Mode** and return to **Command Mode**.
+    * To save and close Vim, type `:wq` (colon followed by `w` for write and `q` for quit) and press Enter.
+
+    **For Nano (another common Git editor):**
+
+    * You can directly use the arrow keys to navigate to the `pick` you want to change and type `edit` over it.
+    * To save and close Nano, press `Ctrl + X`. You'll be asked if you want to save; press `Y` for yes, and then Enter to confirm the filename.
+
+    **Example of the edited list:**
+
+    ```
+    pick <correct_commit_hash> Your correct commit message
+    edit <incorrect_commit_hash_1> Your commit with wrong username
+    edit <incorrect_commit_hash_2> Another commit with wrong username
+    pick <another_correct_commit_hash> Another correct commit message
+    ```
+
+Make sure you change `pick` to `edit` (or `e`) for all the commits where the author is incorrect. Then, save and close the editor.
+
+3.  **Save and Close the Editor:** Follow the save and close instructions for your text editor (e.g., `:wq` in Vim, `Ctrl + X` then `Y` in Nano).
+
+4.  **Amend the Author:** Git will now stop at the first commit you marked with `edit`. In your terminal, run the following command, replacing `"Your Correct Username"` and `"your.correct.email@example.com"` with your actual correct information:
+
+    ```bash
+    git commit --amend --author="Your Correct Username <your.correct.email@example.com>" --no-edit
+    ```
+
+    The `--no-edit` flag keeps the original commit message.
+
+5.  **Continue the Rebase:** Tell Git to move on to the next commit you marked for editing:
+
+    ```bash
+    git rebase --continue
+    ```
+
+6.  **Repeat Steps 4 and 5:** Repeat the `git commit --amend` and `git rebase --continue` commands for each of the commits you marked with `edit` in the rebase "todo" list.
+
+7.  **Force-Push to GitHub:** Once the rebase is complete, you need to update the remote repository with your rewritten history. This requires a force-push:
+
+    ```bash
+    git push --force origin <your_branch_name>
+    ```
+
+    **Warning:** Force-pushing overwrites the history on the remote branch. Use this with caution, especially if others have pulled the old commits.
+
+## Correcting Future Commits
+
+To prevent this from happening again, make sure your local Git configuration has the correct username and email:
+
+```bash
+git config --global user.name "Your Correct Username"
+git config --global user.email "your.correct.email@example.com"
+```
+
+Or, for a specific repository:
+
+```bash
+cd your_repository
+git config user.name "Your Correct Username"
+git config user.email "your.correct.email@example.com"
+```
+
+Conclusion
+While it's best to have your Git configuration set up correctly from the start, mistakes happen. Using interactive rebase provides a way to rectify author information in your commit history. Remember to be mindful of the implications of rewriting history, especially in collaborative projects. With these steps, you can ensure your contributions are correctly attributed on GitHub.
+
+
+**Key points where we incorporated our discussion:**
+
+* The explanation of interactive rebase.
+* The step-by-step instructions for marking commits as `edit`, amending the author, and continuing the rebase.
+* The crucial step of `git push --force` and the warnings associated with it.
+* The instructions for correcting your local Git configuration for future commits.
+
+Remember to replace the placeholder branch names (`<your_branch_name>`) and the example commit hashes with your actual information. You can also adjust the tone and add more context or examples as needed for your blog.
