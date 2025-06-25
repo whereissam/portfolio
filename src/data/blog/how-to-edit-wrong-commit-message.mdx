@@ -23,24 +23,21 @@ For commits that have already been pushed, the most effective way to change the 
 Here's how to do it:
 
 1.  **Initiate Interactive Rebase:** Open your terminal in your local repository and run the interactive rebase command. You'll need to determine how far back in your history you need to go to include the commits with the wrong username.
+* **If the incorrect commits are recent:** You can rebase onto the `origin/<your_branch_name>` branch (e.g., `origin/main` or `origin/dev-layout`).
+```bash
+git rebase -i origin/<your_branch_name>
+```
+* **To target a specific commit before the incorrect ones:** Use the `^` notation to specify the commit before the first one you want to edit. You can find the commit hashes using `git log --oneline`.
 
-    * **If the incorrect commits are recent:** You can rebase onto the `origin/<your_branch_name>` branch (e.g., `origin/main` or `origin/dev-layout`).
+    ```bash
+    git rebase -i <hash_of_commit_before_incorrect_ones>^
+    ```
 
-        ```bash
-        git rebase -i origin/<your_branch_name>
-        ```
+* **To rebase from the very beginning of your branch:**
 
-    * **To target a specific commit before the incorrect ones:** Use the `^` notation to specify the commit before the first one you want to edit. You can find the commit hashes using `git log --oneline`.
-
-        ```bash
-        git rebase -i <hash_of_commit_before_incorrect_ones>^
-        ```
-
-    * **To rebase from the very beginning of your branch:**
-
-        ```bash
-        git rebase -i --root
-        ```
+    ```bash
+    git rebase -i --root
+    ```
 
 2.  **Mark Commits for Editing:** The rebase command will open a text editor. The appearance and controls will depend on your default Git editor (often Vim or Nano). You'll see a list of your commits. Find the lines corresponding to the commits with the wrong username. You need to change the word `pick` at the beginning of each of those lines to `edit` (or just `e`).
 

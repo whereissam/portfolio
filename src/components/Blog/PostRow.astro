@@ -3,29 +3,45 @@ import { formatDate } from "../../lib/helpers";
 
 interface Props {
   title: string;
+  description?: string;
   date: Date;
   id: string;
 }
 
-const { title, date, id } = Astro.props;
+const { title, description, date, id } = Astro.props;
 ---
 
-<li
-  class="list-none w-full text-neutral-100 hover:text-neutral-400 ease-in-out transition-colors border-b-neutral-400 border-dashed border-b-1 my-2"
+<article
+  class="bg-bs-black-200 border border-bs-black-300 rounded-lg p-4 md:p-8 hover:border-bs-red transition-all duration-200 group"
 >
   <a
-    class="text-sm md:text-base decoration-none flex justify-between"
     href={`/blog/${id}`}
+    class="block space-y-3 md:space-y-4 text-decoration-none"
   >
-    <p class="inline-block whitespace-nowrap">
-      {title}
-    </p>
-    <time
-      class="text-right tabular-nums"
-      datetime={date.toISOString()}
-      data-date={date.toISOString()}
-    >
-      {formatDate(date)}
-    </time>
+    <header class="space-y-2 md:space-y-3">
+      <h2 class="text-xl md:text-2xl font-bold text-bs-white-100 group-hover:text-bs-red transition-colors duration-200 break-words leading-tight">
+        {title}
+      </h2>
+      
+      {description && (
+        <p class="text-bs-white-200 text-base md:text-lg leading-relaxed break-words">
+          {description}
+        </p>
+      )}
+    </header>
+    
+    <footer class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 text-bs-white-300">
+      <time
+        class="text-sm font-medium tabular-nums"
+        datetime={date.toISOString()}
+        data-date={date.toISOString()}
+      >
+        {formatDate(date)}
+      </time>
+      
+      <span class="text-sm font-medium group-hover:text-bs-red transition-colors duration-200">
+        Read more →
+      </span>
+    </footer>
   </a>
-</li>
+</article>

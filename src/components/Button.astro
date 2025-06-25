@@ -1,15 +1,33 @@
 ---
 interface Props {
+  variant?: "primary" | "secondary" | "ghost" | "outline";
+  size?: "sm" | "default" | "lg";
   rounded?: boolean;
+  class?: string;
 }
 
-const { rounded } = Astro.props;
+const { variant = "primary", size = "default", rounded = false, class: className = "" } = Astro.props;
+
+const baseClasses = "inline-flex items-center justify-center font-semibold transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-bs-black disabled:pointer-events-none disabled:opacity-50";
+
+const variantClasses = {
+  primary: "bg-bs-red text-bs-white-100 hover:bg-bs-red-dark focus-visible:ring-bs-red shadow-lg",
+  secondary: "bg-bs-black-200 text-bs-white-100 border border-bs-black-300 hover:bg-bs-black-300 focus-visible:ring-bs-white-300",
+  ghost: "text-bs-white-100 hover:bg-bs-black-300 focus-visible:ring-bs-white-300",
+  outline: "border border-bs-black-300 bg-transparent text-bs-white-100 hover:bg-bs-black-300 focus-visible:ring-bs-white-300"
+};
+
+const sizeClasses = {
+  sm: "h-8 px-4 py-2 text-body-sm",
+  default: "h-10 px-6 py-3 text-body-base",
+  lg: "h-12 px-8 py-4 text-body-lg"
+};
+
+const roundedClass = rounded ? "rounded-full" : "rounded-md";
 ---
 
 <button
-  class={`custom-btn text-xl max-h-[50px] shadow-custom shadow-primary-500 active:shadow-none active:translate-x-[3px] active:translate-y-[3px] text-gray-200 px-5 py-2 border border-primary-500 hover:text-primary-500 transition-colors duration-100 ease-in-out bg-gray-900 cursor-pointer ${
-    rounded ? "rounded-full" : "rounded-lg"
-  }`}
+  class={`${baseClasses} ${variantClasses[variant]} ${sizeClasses[size]} ${roundedClass} ${className}`}
 >
   <slot />
 </button>

@@ -11,24 +11,32 @@ interface Props {
   colorText?: string;
   height?: string;
   width?: string;
+  variant?: "default" | "elevated" | "outline" | "accent";
 }
 
-const { title, body, colSpan, rowSpan, href, colorText, height } = Astro.props;
+const { title, body, colSpan, rowSpan, href, colorText, height, variant = "default" } = Astro.props;
+
+const variantClasses = {
+  default: "bg-bs-black-200 border-bs-black-300 shadow-xl",
+  elevated: "bg-bs-black-200 border-bs-black-300 shadow-2xl",
+  outline: "bg-transparent border-bs-black-300",
+  accent: "bg-bs-black-200 border-bs-red shadow-xl"
+};
 ---
 
 <div
-  class={`card flex flex-col h-max sm:h-auto group overflow-hidden transform-y-[-40%] bg-darkslate-500 shadow-lg rounded-lg p-6 border border-darkslate-100 hover:border-primary-500 align-start flex-none ${
+  class={`card flex flex-col h-max sm:h-auto group overflow-hidden ${variantClasses[variant]} hover:border-bs-red align-start flex-none ${
     height || "h-full"
-  } justify-start relative transform perspective-1200 w-full transition duration-75 ease-in-out col-span-1 ${
+  } justify-start relative w-full transition-all duration-200 ease-in-out col-span-1 ${
     colSpan || "md:col-span-2"
-  } ${rowSpan || ""}`}
+  } ${rowSpan || ""} rounded-lg p-6 border`}
 >
   {
     href ? (
       <a href={href} class={`h-full w-full ${colorText || ""}`}>
         <Icon
           name="ri:arrow-right-up-line"
-          class="h-6 float-right group-hover:text-primary-500 group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform ease-in-out duration-100 z-20"
+          class="h-6 float-right text-bs-white-300 group-hover:text-bs-red group-hover:translate-x-1 group-hover:-translate-y-1 transition-all ease-in-out duration-200 z-20"
         />
         <Content title={title} body={body}>
           <slot />

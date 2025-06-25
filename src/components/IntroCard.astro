@@ -4,80 +4,124 @@ import Button from "./Button.astro";
 import { LINKS } from "../lib/constants";
 import { Icon } from "astro-icon/components";
 import Tooltip from "./Tooltip/index";
-// import HoverTooltip from "./HoverTooltip/index";
 import { Image } from "astro:assets";
 ---
 
-<Card colSpan="md:col-span-3" rowSpan="md:row-span-4">
-  <div class="flex flex-col md:flex-row w-full h-full">
-    <div class="flex flex-col justify-between h-full gap-4">
-      <div class="flex flex-col h-full">
-        <h6 class="text-sm font-light m-0 text-gray-500">Welcome</h6>
-        <p class="m-0 font-light text-xl">
-          Hi, I'm <b class="font-bold">Sam</b>, a software developer with strong
-          focus on the user experience and blockchain - EVM, TON, SOL
-        </p>
+<Card colSpan="md:col-span-3" rowSpan="md:row-span-4" variant="elevated">
+  <div class="flex flex-col md:flex-row w-full h-full relative overflow-hidden">
+    <!-- Animated background elements -->
+    <div class="absolute inset-0 opacity-10">
+      <div class="absolute top-4 right-8 w-32 h-32 bg-bs-red rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-8 left-4 w-24 h-24 bg-bs-red rounded-full blur-2xl animate-pulse" style="animation-delay: 1s;"></div>
+    </div>
+    
+    <div class="flex flex-col justify-between h-full gap-6 z-10 relative">
+      <!-- Header Section -->
+      <div class="flex flex-col space-y-4">
+        <div class="flex items-center gap-3">
+          <div class="flex items-center gap-2">
+            <div class="w-3 h-3 bg-bs-red rounded-full animate-pulse"></div>
+            <span class="text-sm font-medium text-bs-white-300 uppercase tracking-wider">Welcome</span>
+          </div>
+          <div class="flex-1 h-px bg-gradient-to-r from-bs-red to-transparent"></div>
+        </div>
+        
+        <div class="space-y-3">
+          <h1 class="text-2xl md:text-3xl font-bold text-bs-white-100 leading-tight">
+            Hi, I'm <span class="text-bs-red relative">Sam
+              <span class="absolute -bottom-1 left-0 w-full h-0.5 bg-bs-red animate-pulse"></span>
+            </span>
+          </h1>
+          
+          <p class="text-base md:text-lg text-bs-white-200 leading-relaxed">
+            A passionate <span class="text-bs-red font-semibold">full-stack developer</span> specializing in 
+            <span class="text-bs-white-100 font-medium">user experience</span> and 
+            <span class="text-bs-white-100 font-medium">blockchain technology</span>
+          </p>
+          
+          <!-- Tech stack badges -->
+          <div class="flex flex-wrap gap-2 mt-4">
+            {
+              ["EVM", "TON", "Solana", "React", "Node.js"].map((tech) => (
+                <span class="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-bs-black-300 text-bs-white-200 border border-bs-black-400 hover:border-bs-red transition-colors">
+                  {tech}
+                </span>
+              ))
+            }
+          </div>
+        </div>
       </div>
-      <div class="flex flex-wrap gap-4">
-        <a href={LINKS.github} aria-label="github profile" target="_blank">
-          <Button aria-label="github profile">
-            <Icon name="ri:github-fill" class="h-6" />
-            <span class="sr-only">GitHub Profile</span>
-          </Button>
-        </a>
-        <a href={LINKS.linkedin} aria-label="linkedin profile" target="_blank">
-          <Button aria-label="linkedin profile">
-            <Icon name="ri:linkedin-box-fill" class="h-6" />
-            <span class="sr-only">Linkedin Profile</span>
-          </Button>
-        </a>
-        <a href={LINKS.twitter} aria-label="twitter profile" target="_blank">
-          <Button aria-label="twitter profile">
-            <Icon name="ri:twitter-fill" class="h-6" />
-            <span class="sr-only">Twitter Profile</span>
-          </Button>
-        </a>
-        <a href={LINKS.website} aria-label="website profile" target="_blank">
-          <Button aria-label="website profile">
-            <Icon name="ri:link" class="h-6" />
-            <span class="sr-only">website Profile</span>
-          </Button>
-        </a>
-        <!-- <HoverTooltip client:visible text="My Tools"> -->
-        <!-- <a href={LINKS.website} aria-label="tool profile" target="_blank">
-          <Button aria-label="tool site">
-            <Icon name="ri:tools-line" class="h-6" />
-            <span class="sr-only">Tool site</span>
-          </Button>
-        </a> -->
-        <!-- </HoverTooltip> -->
-
-        <a
-          href={LINKS.telegramChannel}
-          aria-label="telegram channel"
-          target="_blank"
-        >
-          <Button aria-label="telegram channel">
-            <Icon name="ri:telegram-fill" class="h-6" />
-            <span class="sr-only">Telegram Channel</span>
-          </Button>
-        </a>
-        <Tooltip client:visible>
-          <Button aria-label="easter egg btn">
-            <Icon name="ri:emotion-laugh-line" class="h-6" />
-            <span class="sr-only">Easter egg button</span>
-          </Button>
-        </Tooltip>
+      
+      <!-- Social Links Section -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-2">
+          <span class="text-sm font-medium text-bs-white-300">Connect with me</span>
+          <div class="flex-1 h-px bg-bs-black-400"></div>
+        </div>
+        
+        <div class="flex flex-wrap gap-3">
+          <a href={LINKS.github} aria-label="GitHub profile" target="_blank" 
+             class="group relative overflow-hidden">
+            <Button variant="secondary" size="sm" class="group-hover:border-bs-red transition-all duration-200">
+              <Icon name="ri:github-fill" class="h-5 w-5 group-hover:text-bs-red transition-colors" />
+              <span class="hidden md:inline text-xs">GitHub</span>
+            </Button>
+          </a>
+          
+          <a href={LINKS.linkedin} aria-label="LinkedIn profile" target="_blank"
+             class="group relative overflow-hidden">
+            <Button variant="secondary" size="sm" class="group-hover:border-blue-400 transition-all duration-200">
+              <Icon name="ri:linkedin-box-fill" class="h-5 w-5 group-hover:text-blue-400 transition-colors" />
+              <span class="hidden md:inline text-xs">LinkedIn</span>
+            </Button>
+          </a>
+          
+          <a href={LINKS.twitter} aria-label="Twitter profile" target="_blank"
+             class="group relative overflow-hidden">
+            <Button variant="secondary" size="sm" class="group-hover:border-cyan-400 transition-all duration-200">
+              <Icon name="ri:twitter-fill" class="h-5 w-5 group-hover:text-cyan-400 transition-colors" />
+              <span class="hidden md:inline text-xs">Twitter</span>
+            </Button>
+          </a>
+          
+          <a href={LINKS.telegramChannel} aria-label="Telegram channel" target="_blank"
+             class="group relative overflow-hidden">
+            <Button variant="secondary" size="sm" class="group-hover:border-blue-500 transition-all duration-200">
+              <Icon name="ri:telegram-fill" class="h-5 w-5 group-hover:text-blue-500 transition-colors" />
+              <span class="hidden md:inline text-xs">Telegram</span>
+            </Button>
+          </a>
+          
+          <Tooltip client:visible>
+            <Button variant="secondary" size="sm" class="group hover:border-yellow-400 transition-all duration-200">
+              <Icon name="ri:emotion-laugh-line" class="h-5 w-5 group-hover:text-yellow-400 transition-colors" />
+              <span class="hidden md:inline text-xs">Surprise</span>
+            </Button>
+          </Tooltip>
+        </div>
       </div>
     </div>
-    <div class="relative md:flex items-end max-w-[200px] w-full h-full ml-auto">
-      <Image
-        width="200"
-        height="200"
-        src="/public/selfphoto.png"
-        class="w-auto max-h-[300px] rounded-full select-none opacity-50 md:opacity-100 transition-opacity duration-300 pointer-events-none object-contain"
-        alt="memoji of sam"
-      />
+    
+    <!-- Profile Image Section -->
+    <div class="relative md:flex items-center justify-center max-w-[220px] w-full h-full ml-auto">
+      <div class="relative group">
+        <!-- Glow effect -->
+        <div class="absolute inset-0 bg-bs-red rounded-full blur-xl opacity-20 group-hover:opacity-30 transition-opacity duration-300"></div>
+        
+        <Image
+          width="200"
+          height="200"
+          src="/public/selfphoto.png"
+          class="relative w-auto max-h-[280px] rounded-full select-none transition-all duration-300 pointer-events-none object-contain group-hover:scale-105 shadow-2xl"
+          alt="Sam's profile picture"
+        />
+        
+        <!-- Status indicator -->
+        <div class="absolute bottom-4 right-4 flex items-center gap-2 bg-bs-black-200 px-3 py-1 rounded-full border border-bs-black-400">
+          <div class="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+          <span class="text-xs text-bs-white-300 font-medium">Available</span>
+        </div>
+      </div>
     </div>
   </div>
 </Card>

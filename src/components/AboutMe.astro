@@ -1,31 +1,106 @@
 ---
 import Card from "./Card/index.astro";
+import { Icon } from "astro-icon/components";
 ---
 
-<Card colSpan="md:col-span-1" rowSpan="md:row-span-6" title="About me">
-  <div class="flex flex-col gap-2">
-    <div class="text-sm font-light">
-      <p>
-        Hi, I'm Sam, a full-stack software developer from Taiwan.
-        <br />
-        My primary tools of choice includes:
-      </p>
-      <ul class="list-disc list-inside">
-        <li>Reactjs</li>
-        <li>Nextjs</li>
-        <li>Astrojs</li>
-        <li>Nodejs</li>
-        <li>blockchain - EVM, TON, SUI</li>
-      </ul>
+<Card colSpan="md:col-span-1" rowSpan="md:row-span-6" variant="elevated">
+  <div class="flex flex-col h-full relative overflow-hidden">
+    <!-- Decorative background -->
+    <div class="absolute top-0 right-0 w-20 h-20 bg-bs-red/10 rounded-full blur-2xl"></div>
+    <div class="absolute bottom-8 left-0 w-16 h-16 bg-bs-red/5 rounded-full blur-xl"></div>
+    
+    <!-- Header -->
+    <div class="flex items-center gap-3 mb-6 relative z-10">
+      <div class="flex items-center gap-2">
+        <Icon name="ri:user-line" class="h-5 w-5 text-bs-red" />
+        <h2 class="text-lg font-bold text-bs-white-100">About Me</h2>
+      </div>
+      <div class="flex-1 h-px bg-gradient-to-r from-bs-red to-transparent"></div>
     </div>
-    <p class="text-sm font-light">
-      Beyond coding, I'm passionate about blockchain industry, try to make a
-      product in blockchain.
-    </p>
-    <p class="text-sm font-light">
-      While I have some preferred tools, I always choose the best one for the
-      job, even if it's not on my usual list. My goal is to find the right
-      solution for each project.
-    </p>
+    
+    <!-- Content -->
+    <div class="flex flex-col gap-6 flex-1 relative z-10">
+      <!-- Intro -->
+      <div class="space-y-3">
+        <p class="text-sm text-bs-white-200 leading-relaxed">
+          Hi, I'm <span class="text-bs-red font-semibold">Sam</span>, a full-stack software developer from 
+          <span class="text-bs-white-100 font-medium">🇹🇼 Taiwan</span>.
+        </p>
+        
+        <div class="flex items-center gap-2 text-xs text-bs-white-300">
+          <Icon name="ri:map-pin-line" class="h-4 w-4" />
+          <span>Based in Taiwan • Open to remote work</span>
+        </div>
+      </div>
+      
+      <!-- Tech Stack -->
+      <div class="space-y-4">
+        <div class="flex items-center gap-2">
+          <Icon name="ri:code-s-slash-line" class="h-4 w-4 text-bs-red" />
+          <h3 class="text-sm font-semibold text-bs-white-100">Tech Stack</h3>
+        </div>
+        
+        <div class="grid grid-cols-2 gap-2">
+          {
+            [
+              { name: "React.js", icon: "ri:reactjs-line", color: "text-blue-400" },
+              { name: "Next.js", icon: "ri:nextjs-line", color: "text-gray-300" },
+              { name: "Astro.js", icon: "ri:rocket-line", color: "text-orange-400" },
+              { name: "Node.js", icon: "ri:nodejs-line", color: "text-green-400" },
+              { name: "Blockchain", icon: "ri:links-line", color: "text-yellow-400" },
+              { name: "TypeScript", icon: "ri:code-line", color: "text-blue-500" }
+            ].map((tech) => (
+              <div class="flex items-center gap-2 p-2 rounded-lg bg-bs-black-300 border border-bs-black-400 hover:border-bs-red transition-all duration-200 group">
+                <Icon name={tech.icon} class={`h-4 w-4 ${tech.color} group-hover:scale-110 transition-transform`} />
+                <span class="text-xs text-bs-white-200 font-medium">{tech.name}</span>
+              </div>
+            ))
+          }
+        </div>
+        
+        <!-- Blockchain focus -->
+        <div class="bg-bs-black-300 rounded-lg p-3 border border-bs-black-400">
+          <div class="flex items-center gap-2 mb-2">
+            <Icon name="ri:global-line" class="h-4 w-4 text-bs-red" />
+            <span class="text-xs font-semibold text-bs-white-100">Blockchain Expertise</span>
+          </div>
+          <div class="flex flex-wrap gap-1">
+            {
+              ["EVM", "TON", "Solana"].map((blockchain) => (
+                <span class="inline-block px-2 py-1 bg-bs-red/20 text-bs-red rounded text-xs font-medium border border-bs-red/30">
+                  {blockchain}
+                </span>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+      
+      <!-- Passion & Goals -->
+      <div class="space-y-4 mt-auto">
+        <div class="space-y-3">
+          <div class="flex items-center gap-2">
+            <Icon name="ri:heart-pulse-line" class="h-4 w-4 text-bs-red animate-pulse" />
+            <h3 class="text-sm font-semibold text-bs-white-100">Passion</h3>
+          </div>
+          
+          <p class="text-xs text-bs-white-200 leading-relaxed">
+            Beyond coding, I'm passionate about the <span class="text-bs-red font-medium">blockchain industry</span> 
+            and building innovative products that shape the future of decentralized technology.
+          </p>
+        </div>
+        
+        <!-- Philosophy -->
+        <div class="bg-bs-black-300/50 rounded-lg p-3 border border-bs-black-400">
+          <div class="flex items-start gap-2">
+            <Icon name="ri:lightbulb-line" class="h-4 w-4 text-yellow-400 mt-0.5 flex-shrink-0" />
+            <p class="text-xs text-bs-white-300 leading-relaxed italic">
+              "I believe in choosing the right tool for each project, not just the familiar ones. 
+              The best solution is always worth learning."
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </Card>

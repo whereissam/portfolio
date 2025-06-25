@@ -1,0 +1,68 @@
+---
+interface Props {
+  code: string;
+  language?: string;
+}
+
+const { code, language = 'text' } = Astro.props;
+const id = `code-${Math.random().toString(36).substring(2, 9)}`;
+---
+
+<div class="code-block-wrapper group relative">
+  {language && (
+    <span class="code-lang">{language}</span>
+  )}
+  <button 
+    class="code-copy-btn"
+    data-code-id={id}
+    title="Copy code"
+  >
+    Copy
+  </button>
+  <pre class="group"><code id={id} class={`language-${language}`}>{code}</code></pre>
+</div>
+
+<script>
+  function setupCodeCopy() {
+    const copyButtons = document.querySelectorAll('.code-copy-btn');
+    
+    copyButtons.forEach(button => {
+      button.addEventListener('click', async () => {
+        const codeId = button.getAttribute('data-code-id');
+        const codeElement = document.getElementById(codeId);
+        
+        if (!codeElement) return;
+        
+        try {
+          await navigator.clipboard.writeText(codeElement.textContent || '');
+          button.textContent = 'Copied!';
+          button.classList.add('bg-bs-success');
+          button.classList.remove('bg-bs-black-400');
+          
+          setTimeout(() => {
+            button.textContent = 'Copy';
+            button.classList.remove('bg-bs-success');
+            button.classList.add('bg-bs-black-400');
+          }, 2000);
+        } catch (err) {
+          console.error('Failed to copy code:', err);
+          button.textContent = 'Failed';
+          
+          setTimeout(() => {
+            button.textContent = 'Copy';
+          }, 2000);
+        }
+      });
+    });
+  }
+
+  // Setup copy functionality when DOM is loaded
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', setupCodeCopy);
+  } else {
+    setupCodeCopy();
+  }
+
+  // Re-setup when navigating (for SPA-like behavior)
+  document.addEventListener('astro:page-load', setupCodeCopy);
+</script>
