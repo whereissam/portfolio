@@ -24,11 +24,17 @@ export default defineConfig({
     //     "https://gianmarcocavallo.com/sitemap-0.xml",
     //   ],
     // }),
-    solidJs(),
+    solidJs({
+      include: ['**/solid/**/*']
+    }),
     icon(),
-    svelte(),
+    svelte({
+      include: ['**/svelte/**/*']
+    }),
     mdx(),
-    react(),
+    react({
+      include: ['**/react/**/*', '**/components/**/*']
+    }),
     tailwind({
       applyBaseStyles: false,
     }),
