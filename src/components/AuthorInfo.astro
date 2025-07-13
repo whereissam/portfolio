@@ -1,0 +1,42 @@
+---
+type Props = {
+  name?: string;
+  size?: "sm" | "md" | "lg";
+  showName?: boolean;
+  imageSrc?: string;
+  className?: string;
+};
+
+const { 
+  name = "Sam", 
+  size = "md", 
+  showName = true, 
+  imageSrc = "/favicon.png",
+  className = ""
+} = Astro.props;
+
+const sizeClasses = {
+  sm: "width: 2rem; height: 2rem;",
+  md: "width: 3rem; height: 3rem;",
+  lg: "width: 5rem; height: 5rem;"
+};
+
+const shadowClasses = {
+  sm: "box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);",
+  md: "box-shadow: 0 4px 16px rgba(255, 107, 53, 0.3);", 
+  lg: "box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);"
+};
+---
+
+<div class={`author-info ${className}`} style="display: flex; align-items: center; gap: 0.75rem;">
+  <img
+    src={imageSrc}
+    alt={name}
+    style={`${sizeClasses[size]} border-radius: 50%; object-fit: cover; ${shadowClasses[size]}`}
+  />
+  {showName && (
+    <span style="font-weight: 600; color: #FFFFFF;">
+      {name}
+    </span>
+  )}
+</div>

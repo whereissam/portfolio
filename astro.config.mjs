@@ -25,7 +25,7 @@ export default defineConfig({
     //   ],
     // }),
     solidJs({
-      include: ['**/solid/**/*']
+      include: ['**/solid/**/*', '**/components/Globe.tsx', '**/components/Tooltip/**/*', '**/components/HoverTooltip/**/*']
     }),
     icon(),
     svelte({

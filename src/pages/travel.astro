@@ -1,6 +1,21 @@
 ---
 import Globe from "../components/Globe";
 import BasicLayout from "../layouts/BasicLayout.astro";
+
+const visitedCountries = [
+  { name: "Germany", flag: "🇩🇪" },
+  { name: "France", flag: "🇫🇷" },
+  { name: "China", flag: "🇨🇳" },
+  { name: "Taiwan", flag: "🇹🇼" },
+  { name: "Japan", flag: "🇯🇵" },
+  { name: "South Korea", flag: "🇰🇷" },
+  { name: "Belgium", flag: "🇧🇪" },
+  { name: "Netherlands", flag: "🇳🇱" },
+  { name: "Thailand", flag: "🇹🇭" },
+  { name: "Malaysia", flag: "🇲🇾" },
+  { name: "Singapore", flag: "🇸🇬" },
+  { name: "Turkey", flag: "🇹🇷" },
+];
 ---
 
 <script>
@@ -18,15 +33,90 @@ import BasicLayout from "../layouts/BasicLayout.astro";
 </script>
 
 <BasicLayout
-  title="Sam - Visited Countries"
-  description="A 3d globe showing countries that I have visited so far"
+  title="Sam - Travel Map"
+  description="An interactive 3D globe showcasing countries I've visited around the world"
   page="travel"
 >
-  <a
-    href="/"
-    class="text-bs-white-100 absolute bg-bs-black-300 hover:bg-bs-black-400 top-4 left-4 px-4 py-2 border border-bs-black-400 rounded-lg transition-all duration-200 font-medium z-10"
-    >← Back</a
-  >
+  <div style="min-height: 100vh; background: linear-gradient(135deg, #000000 0%, #0a0a0a 100%); position: relative;">
+    <!-- Background pattern -->
+    <div style="position: absolute; inset: 0; opacity: 0.05; background-image: radial-gradient(circle at 25% 25%, #FF6B35 0%, transparent 50%), radial-gradient(circle at 75% 75%, #FF6B35 0%, transparent 50%);"></div>
+    
+    <!-- Back button -->
+    <a
+      href="/"
+      style="position: absolute; top: 1.5rem; left: 1.5rem; z-index: 20; display: inline-flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.5rem; background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0.75rem; color: #FFFFFF; text-decoration: none; font-weight: 500; transition: all 0.3s; backdrop-filter: blur(8px);"
+      onmouseover="this.style.background='rgba(255, 107, 53, 0.1)'; this.style.borderColor='rgba(255, 107, 53, 0.3)'"
+      onmouseout="this.style.background='rgba(255, 255, 255, 0.05)'; this.style.borderColor='rgba(255, 255, 255, 0.1)'"
+    >
+      <svg style="width: 1rem; height: 1rem;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path>
+      </svg>
+      Back
+    </a>
 
-  <Globe client:load />
+    <!-- Main content -->
+    <div style="max-width: 1400px; margin: 0 auto; padding: 2rem 1rem; position: relative; z-index: 10;">
+      <!-- Header -->
+      <div style="text-align: center; margin-bottom: 3rem; padding-top: 2rem;">
+        <h1 style="font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; margin-bottom: 1rem; color: #FFFFFF; background: linear-gradient(135deg, #FFFFFF 0%, #E0E0E0 100%); background-clip: text; -webkit-background-clip: text; -webkit-text-fill-color: transparent;">
+          My Travel Map
+        </h1>
+        <p style="font-size: 1.25rem; color: #B0B0B0; max-width: 32rem; margin: 0 auto 2rem; line-height: 1.6;">
+          Explore the countries I've visited around the world. Each highlighted country tells a story of adventure and discovery.
+        </p>
+        <div style="display: inline-flex; align-items: center; gap: 2rem; padding: 1rem 2rem; background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1rem; backdrop-filter: blur(8px);">
+          <div style="text-align: center;">
+            <div style="font-size: 2rem; font-weight: 700; color: #FF6B35; margin-bottom: 0.25rem;">{visitedCountries.length}</div>
+            <div style="font-size: 0.875rem; color: #A0A0A0; font-weight: 500;">Countries</div>
+          </div>
+          <div style="width: 1px; height: 2rem; background: rgba(255, 255, 255, 0.1);"></div>
+          <div style="text-align: center;">
+            <div style="font-size: 2rem; font-weight: 700; color: #FF6B35; margin-bottom: 0.25rem;">7+</div>
+            <div style="font-size: 0.875rem; color: #A0A0A0; font-weight: 500;">Years</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Globe container -->
+      <div style="display: grid; grid-template-columns: 1fr; lg:grid-template-columns: 2fr 1fr; gap: 3rem; align-items: start;">
+        <!-- Globe -->
+        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; padding: 2rem; backdrop-filter: blur(8px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
+          <div style="aspect-ratio: 1; width: 100%; max-width: 600px; margin: 0 auto;">
+            <Globe client:load />
+          </div>
+        </div>
+
+        <!-- Countries list -->
+        <div style="background: rgba(255, 255, 255, 0.02); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 1.5rem; padding: 2rem; backdrop-filter: blur(8px); box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);">
+          <h3 style="font-size: 1.5rem; font-weight: 700; color: #FFFFFF; margin: 0 0 1.5rem 0; display: flex; align-items: center; gap: 0.75rem;">
+            <svg style="width: 1.5rem; height: 1.5rem; color: #FF6B35;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z"></path>
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z"></path>
+            </svg>
+            Visited Countries
+          </h3>
+          <div style="space-y: 0.75rem; max-height: 400px; overflow-y: auto; padding-right: 0.5rem;">
+            {visitedCountries.map((country) => (
+              <div style="display: flex; align-items: center; gap: 0.75rem; padding: 0.75rem 1rem; background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 0.5rem; transition: all 0.3s;"
+                onmouseover="this.style.background='rgba(255, 107, 53, 0.05)'; this.style.borderColor='rgba(255, 107, 53, 0.2)'"
+                onmouseout="this.style.background='rgba(255, 255, 255, 0.03)'; this.style.borderColor='rgba(255, 255, 255, 0.1)'">
+                <span style="font-size: 1.25rem;">{country.flag}</span>
+                <span style="font-weight: 600; color: #FFFFFF;">{country.name}</span>
+              </div>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Additional info -->
+      <div style="margin-top: 3rem; text-align: center;">
+        <div style="background: rgba(255, 107, 53, 0.1); border: 1px solid rgba(255, 107, 53, 0.2); border-radius: 1rem; padding: 2rem; backdrop-filter: blur(8px);">
+          <h4 style="font-size: 1.25rem; font-weight: 700; color: #FFFFFF; margin: 0 0 0.75rem 0;">🌍 Currently Based</h4>
+          <p style="color: #B0B0B0; margin: 0; font-size: 1rem;">
+            <strong style="color: #FF6B35;">Berlin, Germany</strong> - Working as a freelance developer and exploring Europe
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
 </BasicLayout>
