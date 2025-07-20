@@ -111,9 +111,11 @@ import { Image } from "astro:assets";
         <Image
           width="200"
           height="200"
-          src="/selfphoto.png"
+          src="/selfphoto-440.png"
           class="relative w-auto max-h-[280px] rounded-full select-none transition-all duration-300 pointer-events-none object-contain group-hover:scale-105 shadow-2xl"
           alt="Sam's profile picture"
+          loading="eager"
+          fetchpriority="high"
         />
         
         <!-- Status indicator -->

@@ -1,4 +1,6 @@
 ---
+import { Image } from "astro:assets";
+
 type Props = {
   name?: string;
   size?: "sm" | "md" | "lg";
@@ -16,26 +18,35 @@ const {
 } = Astro.props;
 
 const sizeClasses = {
-  sm: "width: 2rem; height: 2rem;",
-  md: "width: 3rem; height: 3rem;",
-  lg: "width: 5rem; height: 5rem;"
+  sm: "w-8 h-8",
+  md: "w-12 h-12",
+  lg: "w-20 h-20"
+};
+
+const sizeValues = {
+  sm: { width: 32, height: 32 },
+  md: { width: 48, height: 48 },
+  lg: { width: 80, height: 80 }
 };
 
 const shadowClasses = {
-  sm: "box-shadow: 0 2px 8px rgba(255, 107, 53, 0.3);",
-  md: "box-shadow: 0 4px 16px rgba(255, 107, 53, 0.3);", 
-  lg: "box-shadow: 0 8px 24px rgba(255, 107, 53, 0.3);"
+  sm: "shadow-md shadow-bs-red/30",
+  md: "shadow-lg shadow-bs-red/30",
+  lg: "shadow-xl shadow-bs-red/30"
 };
 ---
 
-<div class={`author-info ${className}`} style="display: flex; align-items: center; gap: 0.75rem;">
-  <img
+<div class={`author-info flex items-center gap-3 ${className}`}>
+  <Image
     src={imageSrc}
     alt={name}
-    style={`${sizeClasses[size]} border-radius: 50%; object-fit: cover; ${shadowClasses[size]}`}
+    width={sizeValues[size].width}
+    height={sizeValues[size].height}
+    class={`${sizeClasses[size]} rounded-full object-cover ${shadowClasses[size]}`}
+    loading="lazy"
   />
   {showName && (
-    <span style="font-weight: 600; color: #FFFFFF;">
+    <span class="font-semibold text-bs-white-100">
       {name}
     </span>
   )}

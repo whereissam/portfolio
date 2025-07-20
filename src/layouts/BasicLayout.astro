@@ -97,7 +97,8 @@ const schema =
       content={image || `${Astro.url.origin}/og-image.jpg`}
     />
 
-    <link rel="preconnect" href="https://cdn.fontshare.com" />
+    <link rel="preload" href="/fonts/Satoshi-Variable.ttf" as="font" type="font/ttf" crossorigin />
+    <link rel="preload" href="/fonts/CabinetGrotesk-Variable.ttf" as="font" type="font/ttf" crossorigin />
     {
       page === "travel" && (
         <link rel="canonical" href={`${Astro.url.origin}/travel`} />
@@ -148,7 +149,7 @@ const schema =
 
   body {
     margin: 0;
-    font-family: "Inter", "Satoshi", sans-serif;
+    font-family: "Satoshi", system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
     background-color: #000000;
     color: #FFFFFF;
@@ -160,7 +161,7 @@ const schema =
   h4,
   h5,
   h6 {
-    font-family: "Inter", "Cabinet Grotesk", sans-serif;
+    font-family: "CabinetGrotesk", "Satoshi", sans-serif;
     color: #FFFFFF;
     word-wrap: break-word;
     overflow-wrap: break-word;
@@ -168,7 +169,7 @@ const schema =
   }
   
   p {
-    font-family: "Inter", "Satoshi", sans-serif;
+    font-family: "Satoshi", system-ui, -apple-system, sans-serif;
     color: #F5F5F5;
     word-wrap: break-word;
     overflow-wrap: break-word;
