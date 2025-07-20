@@ -6,6 +6,11 @@ import ContactsCard from "../components/ContactsCard.astro";
 import TimeZone from "../components/TimeZoneCard.astro";
 import AboutMe from "../components/AboutMe.astro";
 import Now from "../components/Now.astro";
+import HackathonAchievements from "../components/HackathonAchievements.astro";
+import Services from "../components/Services.astro";
+import FavoriteTools from "../components/FavoriteTools.astro";
+import FloatingParticles from "../components/FloatingParticles.astro";
+import AnimatedCounter from "../components/AnimatedCounter.astro";
 import Globe from "../components/Globe";
 import { getCollection } from "astro:content";
 import { formatDate } from "../lib/helpers";
@@ -44,11 +49,14 @@ const posts = (await getCollection("blog"))?.sort(
   title="Sam - Full-stack Developer"
   description="Full-stack developer based in Berlin, specializing in blockchain and Web3 development."
 >
-  <div class="min-h-screen w-full bg-bs-black relative">
+  <div class="min-h-screen w-full bg-bs-black relative overflow-hidden">
     <!-- Background gradient -->
     <div class="absolute inset-0 bg-gradient-to-br from-bs-black via-bs-black to-bs-black-200 opacity-50"></div>
     <!-- Subtle pattern overlay -->
     <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 25% 25%, #FF6B35 0%, transparent 50%), radial-gradient(circle at 75% 75%, #FF6B35 0%, transparent 50%);"></div>
+    
+    <!-- Floating Particles -->
+    <FloatingParticles />
     
     <main
       class="relative z-10 text-white mx-auto w-full max-w-6xl p-2 grid gap-2 sm:p-4 sm:gap-2 md:grid-cols-2 md:gap-3 md:p-6 lg:grid-cols-4 lg:gap-4 pb-8"
@@ -214,6 +222,13 @@ const posts = (await getCollection("blog"))?.sort(
           }
         </div>
       </Card>
+      
+      <!-- Full Width Sections -->
+      <div class="col-span-1 md:col-span-2 lg:col-span-4 grid gap-2 md:gap-3 lg:gap-4 md:grid-cols-3">
+        <HackathonAchievements />
+        <!-- <Services /> -->
+        <FavoriteTools />
+      </div>
     </main>
   </div>
 </Layout>

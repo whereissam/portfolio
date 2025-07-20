@@ -1,0 +1,88 @@
+---
+import Card from "./Card/index.astro";
+import { Icon } from "astro-icon/components";
+---
+
+<Card colSpan="md:col-span-1" rowSpan="md:row-span-2" variant="accent" title="💼 Services" href="/services">
+  <div class="flex flex-col h-full relative overflow-hidden">
+    <!-- Decorative background -->
+    <div class="absolute top-0 right-0 w-20 h-20 bg-bs-red/10 rounded-full blur-2xl"></div>
+    <div class="absolute bottom-8 left-0 w-16 h-16 bg-bs-red/5 rounded-full blur-xl"></div>
+    
+    <!-- Services List -->
+    <div class="flex flex-col h-full">
+      <!-- Scrollable services container -->
+      <div class="flex-1 overflow-y-auto pr-2 -mr-2 space-y-3 max-h-[240px] custom-scrollbar">
+      {
+        [
+          {
+            title: "Full-Stack Development",
+            description: "End-to-end web applications with modern frameworks",
+            icon: "ri:code-s-slash-line",
+            tech: ["React", "Next.js", "Node.js", "TypeScript"]
+          },
+          {
+            title: "Blockchain Development",
+            description: "Smart contracts and dApps on multiple chains",
+            icon: "ri:links-line", 
+            tech: ["Ethereum", "Solana", "TON", "Smart Contracts"]
+          },
+          {
+            title: "Web3 Integration",
+            description: "Connect traditional apps with blockchain",
+            icon: "ri:global-line",
+            tech: ["Web3.js", "Ethers.js", "Wallet Connect", "IPFS"]
+          },
+          {
+            title: "Technical Consulting",
+            description: "Architecture advice and tech stack optimization",
+            icon: "ri:lightbulb-line",
+            tech: ["Strategy", "Architecture", "Performance", "Security"]
+          }
+        ].map((service) => (
+          <div class="bg-bs-black-300 rounded-lg p-4 border border-bs-black-400 hover:border-bs-red transition-all duration-200 group">
+            <div class="flex items-start gap-3">
+              <div class="flex-shrink-0 p-2 rounded-lg bg-bs-red/20 border border-bs-red/30">
+                <Icon name={service.icon} class="h-4 w-4 text-bs-red" />
+              </div>
+              
+              <div class="flex-1 min-w-0">
+                <h3 class="text-sm font-bold text-bs-white-100 mb-1 group-hover:text-bs-red transition-colors">
+                  {service.title}
+                </h3>
+                
+                <p class="text-xs text-bs-white-200 leading-relaxed mb-3">
+                  {service.description}
+                </p>
+                
+                <div class="flex flex-wrap gap-1">
+                  {service.tech.map((tech) => (
+                    <span class="inline-block px-2 py-1 bg-bs-black-400 text-bs-white-300 rounded text-xs font-medium">
+                      {tech}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+      </div>
+      
+      <!-- CTA Footer -->
+      <div class="mt-4 pt-3 border-t border-bs-black-400">
+        <div class="text-center">
+          <div class="mb-2 text-xs text-bs-white-300">
+            + Mobile, DevOps, Consulting & more
+          </div>
+          <div class="inline-flex items-center gap-2 text-xs text-bs-red hover:text-bs-white-100 transition-colors cursor-pointer">
+            <span>View all services</span>
+            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
+            </svg>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</Card>

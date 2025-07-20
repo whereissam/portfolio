@@ -1,0 +1,154 @@
+---
+import { Icon } from "astro-icon/components";
+import type { Tool } from '../lib/toolsData';
+
+interface Props {
+  tools: Tool[];
+}
+
+const { tools } = Astro.props;
+const categories = ['all', ...new Set(tools.map(tool => tool.category))];
+---
+
+<div class="space-y-6" id="tools-filter">
+  <!-- Search -->
+  <div class="relative">
+    <input
+      type="text"
+      placeholder="Search tools and apps..."
+      id="search-input"
+      class="w-full px-4 py-3 bg-bs-black-300 border border-bs-black-400 rounded-lg text-bs-white-100 placeholder-bs-white-300 focus:border-bs-red focus:outline-none transition-colors"
+    />
+    <Icon name="ri:search-line" class="absolute right-3 top-3.5 h-4 w-4 text-bs-white-300" />
+  </div>
+
+  <!-- Type Tabs -->
+  <div class="flex gap-1 p-1 bg-bs-black-300 rounded-lg">
+    <button
+      data-type="all"
+      class="type-tab flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 bg-bs-red text-bs-white-100 shadow-lg"
+    >
+      All
+    </button>
+    <button
+      data-type="tool"
+      class="type-tab flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 text-bs-white-300 hover:text-bs-white-100 hover:bg-bs-black-400"
+    >
+      Tools
+    </button>
+    <button
+      data-type="app"
+      class="type-tab flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 text-bs-white-300 hover:text-bs-white-100 hover:bg-bs-black-400"
+    >
+      Apps
+    </button>
+  </div>
+
+  <!-- Category Filter -->
+  <div class="flex flex-wrap gap-2">
+    {categories.map((category) => (
+      <button
+        data-category={category}
+        class={`category-filter px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border ${
+          category === 'all'
+            ? 'bg-bs-red/20 text-bs-red border-bs-red/30'
+            : 'bg-bs-black-300 text-bs-white-300 border-bs-black-400 hover:border-bs-red hover:text-bs-red'
+        }`}
+      >
+        {category === 'all' ? 'All Categories' : category}
+      </button>
+    ))}
+  </div>
+</div>
+
+<script>
+  // Filter functionality
+  let currentType = 'all';
+  let currentCategory = 'all';
+  let currentSearch = '';
+
+  const searchInput = document.getElementById('search-input') as HTMLInputElement;
+  const typeTabs = document.querySelectorAll('.type-tab');
+  const categoryFilters = document.querySelectorAll('.category-filter');
+  const toolCards = document.querySelectorAll('.tool-card');
+
+  // Get tools data from the page
+  const toolsData = window.toolsData || [];
+
+  function filterTools() {
+    toolCards.forEach((card) => {
+      const cardElement = card as HTMLElement;
+      const toolId = cardElement.dataset.toolId;
+      const tool = toolsData.find((t: any) => t.id === toolId);
+      
+      if (!tool) return;
+
+      let shouldShow = true;
+
+      // Filter by type
+      if (currentType !== 'all' && tool.type !== currentType) {
+        shouldShow = false;
+      }
+
+      // Filter by category
+      if (currentCategory !== 'all' && tool.category !== currentCategory) {
+        shouldShow = false;
+      }
+
+      // Filter by search
+      if (currentSearch) {
+        const searchTerm = currentSearch.toLowerCase();
+        const matchesName = tool.name.toLowerCase().includes(searchTerm);
+        const matchesDescription = tool.description.toLowerCase().includes(searchTerm);
+        const matchesTags = tool.tags.some((tag: string) => tag.toLowerCase().includes(searchTerm));
+        
+        if (!matchesName && !matchesDescription && !matchesTags) {
+          shouldShow = false;
+        }
+      }
+
+      // Show/hide card
+      if (shouldShow) {
+        cardElement.style.display = 'block';
+        cardElement.style.opacity = '1';
+      } else {
+        cardElement.style.display = 'none';
+        cardElement.style.opacity = '0';
+      }
+    });
+  }
+
+  // Search input handler
+  searchInput?.addEventListener('input', (e) => {
+    currentSearch = (e.target as HTMLInputElement).value;
+    filterTools();
+  });
+
+  // Type tab handlers
+  typeTabs.forEach((tab) => {
+    tab.addEventListener('click', () => {
+      // Update active state
+      typeTabs.forEach(t => {
+        t.className = 'type-tab flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 text-bs-white-300 hover:text-bs-white-100 hover:bg-bs-black-400';
+      });
+      tab.className = 'type-tab flex-1 px-4 py-2 rounded-md text-sm font-medium transition-all duration-200 bg-bs-red text-bs-white-100 shadow-lg';
+      
+      currentType = (tab as HTMLElement).dataset.type || 'all';
+      filterTools();
+    });
+  });
+
+  // Category filter handlers
+  categoryFilters.forEach((filter) => {
+    filter.addEventListener('click', () => {
+      // Update active state
+      categoryFilters.forEach(f => {
+        f.className = 'category-filter px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border bg-bs-black-300 text-bs-white-300 border-bs-black-400 hover:border-bs-red hover:text-bs-red';
+      });
+      filter.className = 'category-filter px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border bg-bs-red/20 text-bs-red border-bs-red/30';
+      
+      currentCategory = (filter as HTMLElement).dataset.category || 'all';
+      filterTools();
+    });
+  });
+</script>

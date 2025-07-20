@@ -1,0 +1,59 @@
+---
+interface Props {
+  target: number;
+  duration?: number;
+  suffix?: string;
+  prefix?: string;
+  className?: string;
+}
+
+const { target, duration = 2000, suffix = "", prefix = "", className = "" } = Astro.props;
+const counterId = `counter-${Math.random().toString(36).substr(2, 9)}`;
+---
+
+<span id={counterId} class={`animated-counter ${className}`} data-target={target}>0{suffix}</span>
+
+<script define:vars={{ counterId, target, duration, suffix, prefix }}>
+  function animateCounter() {
+    const counter = document.getElementById(counterId);
+    if (!counter) return;
+
+    const startValue = 0;
+    const endValue = target;
+    const startTime = performance.now();
+
+    function updateCounter(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function for smooth animation
+      const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+      const currentValue = Math.floor(startValue + (endValue - startValue) * easeOutQuart);
+      
+      counter.textContent = `${prefix}${currentValue}${suffix}`;
+      
+      if (progress < 1) {
+        requestAnimationFrame(updateCounter);
+      } else {
+        counter.textContent = `${prefix}${endValue}${suffix}`;
+      }
+    }
+
+    requestAnimationFrame(updateCounter);
+  }
+
+  // Start animation when element comes into view
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCounter();
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  const counterElement = document.getElementById(counterId);
+  if (counterElement) {
+    observer.observe(counterElement);
+  }
+</script>

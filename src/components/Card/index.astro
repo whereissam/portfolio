@@ -27,16 +27,16 @@ const variantClasses = {
 <div
   class={`card flex flex-col h-max sm:h-auto group overflow-hidden ${variantClasses[variant]} hover:border-bs-red align-start flex-none ${
     height || "h-full"
-  } justify-start relative w-full transition-all duration-200 ease-in-out col-span-1 ${
+  } justify-start relative w-full transition-all duration-300 ease-out col-span-1 ${
     colSpan || "md:col-span-2"
-  } ${rowSpan || ""} rounded-lg p-6 border`}
+  } ${rowSpan || ""} rounded-lg p-6 border transform hover:scale-[1.02] hover:shadow-xl hover:shadow-bs-red/10 active:scale-[0.98]`}
 >
   {
     href ? (
       <a href={href} class={`h-full w-full ${colorText || ""}`}>
         <Icon
           name="ri:arrow-right-up-line"
-          class="h-6 float-right text-bs-white-300 group-hover:text-bs-red group-hover:translate-x-1 group-hover:-translate-y-1 transition-all ease-in-out duration-200 z-20"
+          class="h-6 float-right text-bs-white-300 group-hover:text-bs-red group-hover:translate-x-2 group-hover:-translate-y-2 group-hover:rotate-12 transition-all ease-out duration-300 z-20"
         />
         <Content title={title} body={body}>
           <slot />

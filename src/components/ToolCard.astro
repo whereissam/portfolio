@@ -1,0 +1,85 @@
+---
+import { Icon } from "astro-icon/components";
+import type { Tool } from '../lib/toolsData';
+
+interface Props {
+  tool: Tool;
+}
+
+const { tool } = Astro.props;
+---
+
+<div 
+  class={`tool-card group relative bg-bs-black-300 rounded-xl p-4 border border-bs-black-400 hover:border-bs-red transition-all duration-300 hover:shadow-lg hover:shadow-bs-red/10 ${
+    tool.website ? 'cursor-pointer' : ''
+  }`}
+  data-tool-id={tool.id}
+  data-tool-type={tool.type}
+  data-tool-category={tool.category}
+>
+  <!-- Favorite indicator -->
+  {tool.favorite && (
+    <div class="absolute top-3 right-3">
+      <div class="w-2 h-2 bg-bs-red rounded-full animate-pulse"></div>
+    </div>
+  )}
+
+  <div class="flex items-start gap-4">
+    <!-- Icon -->
+    <div class={`flex-shrink-0 p-3 rounded-xl ${tool.bgColor} border ${tool.borderColor} group-hover:scale-110 transition-transform duration-300`}>
+      <Icon name={tool.icon} class={`w-6 h-6 ${tool.color}`} />
+    </div>
+
+    <!-- Content -->
+    <div class="flex-1 min-w-0">
+      <div class="flex items-center justify-between mb-2">
+        <h3 class="text-bs-white-100 font-bold text-lg group-hover:text-bs-red transition-colors">
+          {tool.name}
+        </h3>
+        {tool.website && (
+          <Icon name="ri:external-link-line" class="w-4 h-4 text-bs-white-300 group-hover:text-bs-red transition-colors opacity-0 group-hover:opacity-100" />
+        )}
+      </div>
+
+      <div class="flex items-center gap-2 mb-3">
+        <span class={`inline-block px-2 py-1 rounded-full text-xs font-medium ${tool.bgColor} ${tool.color} border ${tool.borderColor}`}>
+          {tool.category}
+        </span>
+        <span class="inline-block px-2 py-1 rounded-full text-xs font-medium bg-bs-black-400 text-bs-white-300 border border-bs-black-500">
+          {tool.type === 'tool' ? '🛠️ Tool' : '📱 App'}
+        </span>
+      </div>
+
+      <p class="text-bs-white-200 text-sm leading-relaxed mb-3">
+        {tool.description}
+      </p>
+
+      <!-- Tags -->
+      <div class="flex flex-wrap gap-1">
+        {tool.tags.slice(0, 3).map((tag) => (
+          <span class="inline-block px-2 py-1 bg-bs-black-400 text-bs-white-400 rounded text-xs">
+            #{tag}
+          </span>
+        ))}
+        {tool.tags.length > 3 && (
+          <span class="text-xs text-bs-white-400">
+            +{tool.tags.length - 3} more
+          </span>
+        )}
+      </div>
+    </div>
+  </div>
+</div>
+
+{tool.website && (
+  <script define:vars={{ website: tool.website, toolId: tool.id }}>
+    document.addEventListener('DOMContentLoaded', () => {
+      const card = document.querySelector(`[data-tool-id="${toolId}"]`);
+      if (card) {
+        card.addEventListener('click', () => {
+          window.open(website, '_blank', 'noopener,noreferrer');
+        });
+      }
+    });
+  </script>
+)}

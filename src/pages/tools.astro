@@ -1,0 +1,147 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { tools } from "../lib/toolsData";
+import ToolsFilter from "../components/ToolsFilter.astro";
+import ToolCard from "../components/ToolCard.astro";
+import AnimatedCounter from "../components/AnimatedCounter.astro";
+import "@/styles/globals.css";
+
+const toolsCount = tools.length;
+const appsCount = tools.filter(tool => tool.type === 'app').length;
+const devToolsCount = tools.filter(tool => tool.type === 'tool').length;
+const favoriteCount = tools.filter(tool => tool.favorite).length;
+---
+
+<script>
+  import { stagger, spring, timeline, type TimelineDefinition } from "motion";
+  import { loaderAnimation } from "../lib/constants";
+  
+  const cards = document.querySelectorAll(".tool-card");
+  const header = document.querySelector(".page-header");
+  
+  const sequence = [
+    loaderAnimation,
+    [
+      header,
+      { y: ["20%", "0%"], opacity: [0, 1] },
+      {
+        at: "-0.1",
+        duration: 0.4,
+        easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
+      },
+    ],
+    [
+      cards,
+      { y: ["40%", "0%"], opacity: [0, 1] },
+      {
+        at: "-0.1",
+        duration: 0.4,
+        delay: stagger(0.1),
+        easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
+      },
+    ],
+  ];
+
+  timeline(sequence as TimelineDefinition);
+</script>
+
+<Layout
+  title="Tools & Apps - Sam"
+  description="My favorite development tools, productivity apps, and utilities that help me build great software."
+>
+  <div class="min-h-screen w-full bg-bs-black relative">
+    <!-- Background gradient -->
+    <div class="absolute inset-0 bg-gradient-to-br from-bs-black via-bs-black to-bs-black-200 opacity-50"></div>
+    <!-- Subtle pattern overlay -->
+    <div class="absolute inset-0 opacity-5" style="background-image: radial-gradient(circle at 25% 25%, #FF6B35 0%, transparent 50%), radial-gradient(circle at 75% 75%, #FF6B35 0%, transparent 50%);"></div>
+    
+    <!-- Navigation -->
+    <nav class="relative z-10 w-full border-b border-bs-black-300">
+      <div class="mx-auto max-w-6xl px-4 md:px-6 lg:px-8">
+        <div class="flex items-center justify-between h-16">
+          <a href="/" class="flex items-center gap-2 text-bs-white-200 hover:text-bs-red transition-colors">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+            Back to Portfolio
+          </a>
+          <div class="text-bs-white-400 text-sm">
+            Tools & Apps
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <main class="relative z-10 text-white mx-auto w-full max-w-6xl p-4 md:p-6 lg:p-8">
+      <!-- Header -->
+      <div class="page-header mb-8">
+        <div class="text-center mb-8">
+          <h1 class="text-4xl md:text-5xl font-bold text-bs-white-100 mb-4">
+            🛠️ Tools & Apps
+          </h1>
+          <p class="text-lg text-bs-white-200 max-w-2xl mx-auto mb-6">
+            My favorite development tools, productivity apps, and utilities that help me build great software and stay productive.
+          </p>
+          
+          <!-- Stats -->
+          <div class="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto">
+            <div class="bg-bs-black-300 rounded-lg p-4 border border-bs-black-400 hover:border-bs-red transition-all duration-300 transform hover:scale-105">
+              <div class="text-2xl font-bold text-bs-red">
+                <AnimatedCounter target={toolsCount} className="text-2xl font-bold text-bs-red" />
+              </div>
+              <div class="text-xs text-bs-white-300">Total Items</div>
+            </div>
+            <div class="bg-bs-black-300 rounded-lg p-4 border border-bs-black-400 hover:border-bs-red transition-all duration-300 transform hover:scale-105">
+              <div class="text-2xl font-bold text-blue-400">
+                <AnimatedCounter target={devToolsCount} className="text-2xl font-bold text-blue-400" />
+              </div>
+              <div class="text-xs text-bs-white-300">Dev Tools</div>
+            </div>
+            <div class="bg-bs-black-300 rounded-lg p-4 border border-bs-black-400 hover:border-bs-red transition-all duration-300 transform hover:scale-105">
+              <div class="text-2xl font-bold text-green-400">
+                <AnimatedCounter target={appsCount} className="text-2xl font-bold text-green-400" />
+              </div>
+              <div class="text-xs text-bs-white-300">Apps</div>
+            </div>
+            <div class="bg-bs-black-300 rounded-lg p-4 border border-bs-black-400 hover:border-bs-red transition-all duration-300 transform hover:scale-105">
+              <div class="text-2xl font-bold text-yellow-500">
+                <AnimatedCounter target={favoriteCount} className="text-2xl font-bold text-yellow-500" />
+              </div>
+              <div class="text-xs text-bs-white-300">Favorites</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tools Section -->
+      <div class="space-y-8">
+        <!-- Filter Component -->
+        <div class="bg-bs-black-200 rounded-xl p-6 border border-bs-black-300 shadow-xl">
+          <ToolsFilter tools={tools} />
+        </div>
+
+        <!-- Tools Grid -->
+        <div id="tools-grid" class="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
+          {tools.map((tool) => (
+            <ToolCard tool={tool} />
+          ))}
+        </div>
+      </div>
+    </main>
+  </div>
+</Layout>
+
+<script define:vars={{ tools }} is:inline>
+  // Make tools data available globally for filtering
+  window.toolsData = tools;
+</script>
+
+<style>
+  .tool-card {
+    opacity: 0;
+  }
+  
+  .page-header {
+    opacity: 0;
+  }
+</style>

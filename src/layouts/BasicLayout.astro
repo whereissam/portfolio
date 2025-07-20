@@ -108,12 +108,33 @@ const schema =
       )
     }
     <script type="application/ld+json" set:html={JSON.stringify(schema)} />
+    
+    <!-- PWA -->
+    <link rel="manifest" href="/manifest.webmanifest" />
+    <meta name="theme-color" content="#FF6B35" />
+    <link rel="apple-touch-icon" href="/pwa-192x192.png" />
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="Sam Portfolio" />
   </head>
   <body
     class="bg-bs-black min-h-screen flex flex-col justify-center items-center"
   >
     <slot name="loader" />
     <slot />
+    
+    <!-- PWA Registration -->
+    <script>
+      if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('/sw.js')
+          .then((registration) => {
+            console.log('SW registered: ', registration);
+          })
+          .catch((registrationError) => {
+            console.log('SW registration failed: ', registrationError);
+          });
+      }
+    </script>
   </body>
 </html>
 
