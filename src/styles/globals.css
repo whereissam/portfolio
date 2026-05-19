@@ -1,7 +1,96 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+@plugin "@tailwindcss/typography";
 
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@custom-variant dark (&:where(.dark, .dark *));
+
+@theme {
+  --font-sans: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+    "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+    "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji";
+
+  --text-display: 3.5rem;
+  --text-display--line-height: 1.1;
+  --text-h1: 2.25rem;
+  --text-h1--line-height: 1.2;
+  --text-h2: 1.875rem;
+  --text-h2--line-height: 1.25;
+  --text-h3: 1.5rem;
+  --text-h3--line-height: 1.3;
+  --text-h4: 1.25rem;
+  --text-h4--line-height: 1.35;
+  --text-h5: 1.125rem;
+  --text-h5--line-height: 1.4;
+  --text-h6: 1rem;
+  --text-h6--line-height: 1.4;
+  --text-body-lg: 1.125rem;
+  --text-body-lg--line-height: 1.5;
+  --text-body-base: 1rem;
+  --text-body-base--line-height: 1.5;
+  --text-body-sm: 0.875rem;
+  --text-body-sm--line-height: 1.5;
+  --text-caption: 0.75rem;
+  --text-caption--line-height: 1.6;
+
+  --font-weight-light: 300;
+  --font-weight-normal: 400;
+  --font-weight-medium: 500;
+  --font-weight-semibold: 600;
+  --font-weight-bold: 700;
+  --font-weight-extrabold: 800;
+
+  --radius-lg: var(--radius);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-sm: calc(var(--radius) - 4px);
+
+  --color-bs-black: #000000;
+  --color-bs-black-100: #0A0A0A;
+  --color-bs-black-200: #1A1A1A;
+  --color-bs-black-300: #2A2A2A;
+  --color-bs-black-400: #3A3A3A;
+
+  --color-bs-white: #FFFFFF;
+  --color-bs-white-100: #FFFFFF;
+  --color-bs-white-200: #F5F5F5;
+  --color-bs-white-300: #D4D4D4;
+  --color-bs-white-400: #A3A3A3;
+
+  --color-bs-red: #FF6B35;
+  --color-bs-red-dark: #E55A2B;
+  --color-bs-red-light: #FF8A65;
+
+  --color-bs-success: #4ADE80;
+  --color-bs-warning: #FBBF24;
+  --color-bs-error: #EF4444;
+  --color-bs-info: #3B82F6;
+
+  --color-background: hsl(var(--background));
+  --color-foreground: hsl(var(--foreground));
+  --color-card: hsl(var(--card));
+  --color-card-foreground: hsl(var(--card-foreground));
+  --color-popover: hsl(var(--popover));
+  --color-popover-foreground: hsl(var(--popover-foreground));
+  --color-primary: hsl(var(--primary));
+  --color-primary-foreground: hsl(var(--primary-foreground));
+  --color-secondary: hsl(var(--secondary));
+  --color-secondary-foreground: hsl(var(--secondary-foreground));
+  --color-muted: hsl(var(--muted));
+  --color-muted-foreground: hsl(var(--muted-foreground));
+  --color-accent: hsl(var(--accent));
+  --color-accent-foreground: hsl(var(--accent-foreground));
+  --color-destructive: hsl(var(--destructive));
+  --color-destructive-foreground: hsl(var(--destructive-foreground));
+  --color-border: hsl(var(--border));
+  --color-input: hsl(var(--input));
+  --color-ring: hsl(var(--ring));
+  --color-chart-1: hsl(var(--chart-1));
+  --color-chart-2: hsl(var(--chart-2));
+  --color-chart-3: hsl(var(--chart-3));
+  --color-chart-4: hsl(var(--chart-4));
+  --color-chart-5: hsl(var(--chart-5));
+}
+
+@source "../**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}";
 
 @layer base {
   :root {
@@ -603,15 +692,15 @@
   }
   
   .obsidian-btn-primary {
-    @apply bg-bs-red text-bs-white-100 px-6 py-3 rounded-md font-semibold hover:bg-bs-red-dark focus:outline-none focus:ring-2 focus:ring-bs-red focus:ring-opacity-75 transition-all duration-200;
+    @apply bg-bs-red text-bs-white-100 px-6 py-3 rounded-md font-semibold hover:bg-bs-red-dark focus:outline-none focus:ring-2 focus:ring-bs-red/75 transition-all duration-200;
   }
   
   .obsidian-btn-secondary {
-    @apply bg-bs-black-200 text-bs-white-100 px-6 py-3 rounded-md font-semibold border border-bs-black-300 hover:bg-bs-black-300 focus:outline-none focus:ring-2 focus:ring-bs-white-300 focus:ring-opacity-50 transition-all duration-200;
+    @apply bg-bs-black-200 text-bs-white-100 px-6 py-3 rounded-md font-semibold border border-bs-black-300 hover:bg-bs-black-300 focus:outline-none focus:ring-2 focus:ring-bs-white-300/50 transition-all duration-200;
   }
   
   .obsidian-btn-ghost {
-    @apply text-bs-white-100 px-6 py-3 rounded-md hover:bg-bs-black-300 focus:outline-none focus:ring-2 focus:ring-bs-white-300 focus:ring-opacity-50 transition-all duration-200;
+    @apply text-bs-white-100 px-6 py-3 rounded-md hover:bg-bs-black-300 focus:outline-none focus:ring-2 focus:ring-bs-white-300/50 transition-all duration-200;
   }
   
   .obsidian-input {

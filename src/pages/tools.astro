@@ -13,7 +13,7 @@ const favoriteCount = tools.filter(tool => tool.favorite).length;
 ---
 
 <script>
-  import { stagger, spring, timeline, type TimelineDefinition } from "motion";
+  import { stagger, spring, animate, type AnimationSequence } from "motion";
   import { loaderAnimation } from "../lib/constants";
   
   const cards = document.querySelectorAll(".tool-card");
@@ -42,7 +42,7 @@ const favoriteCount = tools.filter(tool => tool.favorite).length;
     ],
   ];
 
-  timeline(sequence as TimelineDefinition);
+  animate(sequence as AnimationSequence);
 </script>
 
 <Layout

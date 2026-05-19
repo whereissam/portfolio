@@ -5,10 +5,10 @@ import robotsTxt from "astro-robots-txt";
 import icon from "astro-icon";
 import vercel from '@astrojs/vercel';
 import mdx from '@astrojs/mdx';
-import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
 import solidJs from "@astrojs/solid-js";
 import svelte from "@astrojs/svelte";
+import tailwindcss from "@tailwindcss/vite";
 import { remarkReadingTime } from "./src/lib/remark-reading-time.mjs";
 import AstroPWA from '@vite-pwa/astro';
 
@@ -26,18 +26,15 @@ export default defineConfig({
     //   ],
     // }),
     solidJs({
-      include: ['**/solid/**/*', '**/components/Globe.tsx', '**/components/Tooltip/**/*', '**/components/HoverTooltip/**/*']
+      include: ['src/**/solid/**/*', 'src/**/components/Globe.tsx', 'src/**/components/Tooltip/**/*', 'src/**/components/HoverTooltip/**/*']
     }),
     icon(),
     svelte({
-      include: ['**/svelte/**/*']
+      include: ['src/**/svelte/**/*']
     }),
     mdx(),
     react({
-      include: ['**/react/**/*']
-    }),
-    tailwind({
-      applyBaseStyles: false,
+      include: ['src/**/react/**/*']
     }),
     AstroPWA({
       registerType: 'autoUpdate',
@@ -87,6 +84,7 @@ export default defineConfig({
     remarkPlugins: [remarkReadingTime],
   },
   vite: {
-    assetsInclude: "**/*.riv"
+    assetsInclude: "**/*.riv",
+    plugins: [tailwindcss()],
   },
 });

@@ -68,12 +68,12 @@ const web2Projects = [
 ---
 
 <script>
-  import { timeline, type TimelineDefinition } from "motion";
+  import { animate, type AnimationSequence } from "motion";
   import { loaderAnimation } from "../lib/constants";
 
   const sequence = [loaderAnimation];
 
-  timeline(sequence as TimelineDefinition);
+  animate(sequence as AnimationSequence);
 </script>
 
 <Layout

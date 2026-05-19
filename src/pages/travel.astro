@@ -19,7 +19,7 @@ const visitedCountries = [
 ---
 
 <script>
-  import { timeline, type TimelineDefinition } from "motion";
+  import { animate, type AnimationSequence } from "motion";
 
   const sequence = [
     [
@@ -29,7 +29,7 @@ const visitedCountries = [
     ],
   ];
 
-  timeline(sequence as TimelineDefinition);
+  animate(sequence as AnimationSequence);
 </script>
 
 <BasicLayout
