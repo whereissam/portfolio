@@ -24,7 +24,7 @@ const posts = (await getCollection("blog"))?.sort(
 ---
 
 <script>
-  import { stagger, spring, animate, type AnimationSequence } from "motion";
+  import { stagger, animate, type AnimationSequence } from "motion";
   import { loaderAnimation } from "../lib/constants";
   const cards = document.querySelectorAll(".card");
 
@@ -37,7 +37,7 @@ const posts = (await getCollection("blog"))?.sort(
         at: "-0.1",
         duration: 0.4,
         delay: stagger(0.3),
-        easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
+        type: "spring", stiffness: 50, damping: 10, velocity: 100,
       },
     ],
   ];

@@ -134,7 +134,7 @@ const services = [
 ---
 
 <script>
-  import { stagger, spring, animate, type AnimationSequence } from "motion";
+  import { stagger, animate, type AnimationSequence } from "motion";
   import { loaderAnimation } from "../lib/constants";
   
   const cards = document.querySelectorAll(".service-card");
@@ -148,7 +148,7 @@ const services = [
       {
         at: "-0.1",
         duration: 0.4,
-        easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
+        type: "spring", stiffness: 50, damping: 10, velocity: 100,
       },
     ],
     [
@@ -158,7 +158,7 @@ const services = [
         at: "-0.1",
         duration: 0.4,
         delay: stagger(0.1),
-        easing: spring({ velocity: 100, stiffness: 50, damping: 10 }),
+        type: "spring", stiffness: 50, damping: 10, velocity: 100,
       },
     ],
   ];
