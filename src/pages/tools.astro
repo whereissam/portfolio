@@ -12,39 +12,6 @@ const devToolsCount = tools.filter(tool => tool.type === 'tool').length;
 const favoriteCount = tools.filter(tool => tool.favorite).length;
 ---
 
-<script>
-  import { stagger, animate, type AnimationSequence } from "motion";
-  import { loaderAnimation } from "../lib/constants";
-  
-  const cards = document.querySelectorAll(".tool-card");
-  const header = document.querySelector(".page-header");
-  
-  const sequence = [
-    loaderAnimation,
-    [
-      header,
-      { y: ["20%", "0%"], opacity: [0, 1] },
-      {
-        at: "-0.1",
-        duration: 0.4,
-        type: "spring", stiffness: 50, damping: 10, velocity: 100,
-      },
-    ],
-    [
-      cards,
-      { y: ["40%", "0%"], opacity: [0, 1] },
-      {
-        at: "-0.1",
-        duration: 0.4,
-        delay: stagger(0.1),
-        type: "spring", stiffness: 50, damping: 10, velocity: 100,
-      },
-    ],
-  ];
-
-  animate(sequence as AnimationSequence);
-</script>
-
 <Layout
   title="Tools & Apps - Sam"
   description="My favorite development tools, productivity apps, and utilities that help me build great software."

@@ -18,20 +18,6 @@ const visitedCountries = [
 ];
 ---
 
-<script>
-  import { animate, type AnimationSequence } from "motion";
-
-  const sequence = [
-    [
-      ".loaderRef",
-      { opacity: [1, 0], pointerEvents: "none" },
-      { easing: "ease-out" },
-    ],
-  ];
-
-  animate(sequence as AnimationSequence);
-</script>
-
 <BasicLayout
   title="Sam - Travel Map"
   description="An interactive 3D globe showcasing countries I've visited around the world"

@@ -10,39 +10,6 @@ const totalWins = getTotalWins();
 const totalPlacements = getTotalPlacements();
 ---
 
-<script>
-  import { stagger, animate, type AnimationSequence } from "motion";
-  import { loaderAnimation } from "../lib/constants";
-  
-  const cards = document.querySelectorAll(".hackathon-card");
-  const header = document.querySelector(".page-header");
-  
-  const sequence = [
-    loaderAnimation,
-    [
-      header,
-      { y: ["20%", "0%"], opacity: [0, 1] },
-      {
-        at: "-0.1",
-        duration: 0.4,
-        type: "spring", stiffness: 50, damping: 10, velocity: 100,
-      },
-    ],
-    [
-      cards,
-      { y: ["40%", "0%"], opacity: [0, 1] },
-      {
-        at: "-0.1",
-        duration: 0.4,
-        delay: stagger(0.1),
-        type: "spring", stiffness: 50, damping: 10, velocity: 100,
-      },
-    ],
-  ];
-
-  animate(sequence as AnimationSequence);
-</script>
-
 <Layout
   title="Hackathon Achievements - Sam"
   description="My hackathon wins and achievements in blockchain development, Web3, and decentralized applications."

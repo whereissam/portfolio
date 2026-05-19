@@ -687,6 +687,144 @@
 }
 
 @layer components {
+  /* Loader: pure-CSS fade so we don't depend on motion to clear the overlay. */
+  .loader,
+  .loaderRef {
+    animation: loader-fade-out 600ms 150ms cubic-bezier(0.4, 0, 0.2, 1) forwards;
+  }
+  @keyframes loader-fade-out {
+    to { opacity: 0; pointer-events: none; visibility: hidden; }
+  }
+
+  /* Card interactions: scroll reveal, cursor spotlight, 3D tilt. JS lives in
+     src/lib/card-interactions.ts and sets --mx, --my, --tilt-x, --tilt-y. */
+  .card {
+    --card-scale: 1;
+    --tilt-x: 0deg;
+    --tilt-y: 0deg;
+    transform-style: preserve-3d;
+    transform: perspective(1200px)
+      rotateX(var(--tilt-x))
+      rotateY(var(--tilt-y))
+      scale(var(--card-scale));
+    transition: transform 220ms cubic-bezier(0.22, 1, 0.36, 1),
+                border-color 220ms ease,
+                box-shadow 220ms ease;
+  }
+  /* Only promote a card to its own compositor layer while it's actually being
+     hovered/interacted with — keeping every card on the GPU permanently
+     measurably slows scroll. */
+  .card:hover { --card-scale: 1.02; will-change: transform; }
+  .card:active { --card-scale: 0.98; }
+
+  .card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    background: radial-gradient(
+      280px circle at var(--mx, 50%) var(--my, 50%),
+      rgba(255, 107, 53, 0.18),
+      transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 250ms ease;
+    pointer-events: none;
+    z-index: 0;
+  }
+  .card:hover::before { opacity: 1; }
+
+  /* Aurora border: animated conic-gradient ring that replaces the static border. */
+  @property --aurora-angle {
+    syntax: "<angle>";
+    inherits: false;
+    initial-value: 0deg;
+  }
+  .aurora-border {
+    position: relative;
+    border: 1px solid transparent;
+  }
+  .aurora-border::after {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    padding: 1px;
+    background: conic-gradient(
+      from var(--aurora-angle),
+      #FF6B35 0%,
+      #FF8A65 12%,
+      transparent 28%,
+      transparent 50%,
+      #FF6B35 62%,
+      #E55A2B 78%,
+      transparent 92%,
+      #FF6B35 100%
+    );
+    -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+            mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+    -webkit-mask-composite: xor;
+            mask-composite: exclude;
+    animation: aurora-spin 7s linear infinite;
+    pointer-events: none;
+    z-index: 1;
+  }
+  @keyframes aurora-spin {
+    to { --aurora-angle: 360deg; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .aurora-border::after { animation: none; }
+  }
+
+  /* Bento customize: per-card resize handle. Always present but only visible
+     when the card is hovered, so the page isn't cluttered. Press `R` to reset. */
+  .bento-handle {
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    width: 18px;
+    height: 18px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 6px;
+    background: rgba(255, 107, 53, 0.18);
+    color: #FF6B35;
+    border: none;
+    cursor: nwse-resize;
+    z-index: 10;
+    touch-action: none;
+    opacity: 0;
+    transition: opacity 0.2s ease, background-color 0.2s ease, color 0.2s ease;
+  }
+  .bento-handle svg { width: 12px; height: 12px; }
+  .card:hover .bento-handle { opacity: 0.7; }
+  .bento-handle:hover,
+  .bento-handle:focus-visible {
+    opacity: 1 !important;
+    background: rgba(255, 107, 53, 0.95);
+    color: #000;
+    outline: none;
+  }
+  /* While dragging, hint the affected card with a subtle accent outline. */
+  .bento-resizing {
+    outline: 1px dashed rgba(255, 107, 53, 0.6);
+    outline-offset: -1px;
+  }
+  .bento-resizing::before { opacity: 0 !important; }
+
+  /* Pre-reveal hidden state. Only applied when JS is ready, so no-JS users
+     still see content. JS sets data-revealed on each element after animating. */
+  html.js-ready .card:not([data-revealed]),
+  html.js-ready .hackathon-card:not([data-revealed]),
+  html.js-ready .service-card:not([data-revealed]),
+  html.js-ready .tool-card:not([data-revealed]),
+  html.js-ready .blog-card:not([data-revealed]),
+  html.js-ready .page-header:not([data-revealed]),
+  html.js-ready [data-reveal]:not([data-revealed]) {
+    opacity: 0;
+  }
+
   .obsidian-card {
     @apply bg-bs-black-200 rounded-lg p-6 shadow-xl border border-bs-black-300;
   }

@@ -12,9 +12,10 @@ interface Props {
   height?: string;
   width?: string;
   variant?: "default" | "elevated" | "outline" | "accent";
+  aurora?: boolean;
 }
 
-const { title, body, colSpan, rowSpan, href, colorText, height, variant = "default" } = Astro.props;
+const { title, body, colSpan, rowSpan, href, colorText, height, variant = "default", aurora = false } = Astro.props;
 
 const variantClasses = {
   default: "bg-bs-black-200 border-bs-black-300 shadow-xl",
@@ -27,9 +28,9 @@ const variantClasses = {
 <div
   class={`card flex flex-col h-max sm:h-auto group overflow-hidden ${variantClasses[variant]} hover:border-bs-red align-start flex-none ${
     height || "h-full"
-  } justify-start relative w-full transition-all duration-300 ease-out col-span-1 ${
+  } justify-start relative isolate w-full transition-all duration-300 ease-out col-span-1 ${
     colSpan || "md:col-span-2"
-  } ${rowSpan || ""} rounded-lg p-6 border transform hover:scale-[1.02] hover:shadow-xl hover:shadow-bs-red/10 active:scale-[0.98]`}
+  } ${rowSpan || ""} rounded-lg p-6 ${aurora ? "aurora-border" : "border"} hover:shadow-xl hover:shadow-bs-red/10`}
 >
   {
     href ? (

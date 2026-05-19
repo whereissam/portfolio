@@ -7,10 +7,10 @@ import Tooltip from "./Tooltip/index";
 import { Image } from "astro:assets";
 ---
 
-<Card colSpan="md:col-span-3" rowSpan="md:row-span-4" variant="elevated">
+<Card colSpan="md:col-span-3" rowSpan="md:row-span-4" variant="elevated" aurora>
   <div class="flex flex-col md:flex-row w-full h-full relative overflow-hidden">
     <!-- Animated background elements -->
-    <div class="absolute inset-0 opacity-10">
+    <div class="absolute inset-0 opacity-10" data-parallax data-parallax-speed="0.35">
       <div class="absolute top-4 right-8 w-32 h-32 bg-bs-red rounded-full blur-3xl animate-pulse"></div>
       <div class="absolute bottom-8 left-4 w-24 h-24 bg-bs-red rounded-full blur-2xl animate-pulse" style="animation-delay: 1s;"></div>
     </div>

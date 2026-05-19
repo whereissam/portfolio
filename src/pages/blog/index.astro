@@ -10,15 +10,6 @@ const posts = (await getCollection("blog"))?.sort(
 );
 ---
 
-<script>
-  import { animate, type AnimationSequence } from "motion";
-  import { loaderAnimation } from "../../lib/constants";
-
-  const sequence = [loaderAnimation];
-
-  animate(sequence as AnimationSequence);
-</script>
-
 <Layout
   title="Sam - Blog"
   description="Software developer with strong focus on the user experience animations and micro interactions"

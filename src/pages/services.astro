@@ -133,39 +133,6 @@ const services = [
 ];
 ---
 
-<script>
-  import { stagger, animate, type AnimationSequence } from "motion";
-  import { loaderAnimation } from "../lib/constants";
-  
-  const cards = document.querySelectorAll(".service-card");
-  const header = document.querySelector(".page-header");
-  
-  const sequence = [
-    loaderAnimation,
-    [
-      header,
-      { y: ["20%", "0%"], opacity: [0, 1] },
-      {
-        at: "-0.1",
-        duration: 0.4,
-        type: "spring", stiffness: 50, damping: 10, velocity: 100,
-      },
-    ],
-    [
-      cards,
-      { y: ["40%", "0%"], opacity: [0, 1] },
-      {
-        at: "-0.1",
-        duration: 0.4,
-        delay: stagger(0.1),
-        type: "spring", stiffness: 50, damping: 10, velocity: 100,
-      },
-    ],
-  ];
-
-  animate(sequence as AnimationSequence);
-</script>
-
 <Layout
   title="Services - Sam"
   description="Professional development services including full-stack development, blockchain solutions, Web3 integration, and technical consulting."

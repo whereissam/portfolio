@@ -2,7 +2,7 @@
 // Floating particles component for background animation
 ---
 
-<div class="floating-particles fixed inset-0 pointer-events-none z-0" aria-hidden="true">
+<div class="floating-particles fixed inset-0 pointer-events-none z-0" aria-hidden="true" data-parallax data-parallax-speed="0.15">
   {Array.from({ length: 20 }, (_, i) => (
     <div 
       class={`particle absolute rounded-full bg-gradient-to-r from-bs-red/20 to-orange-400/20 animate-float-${(i % 4) + 1}`}

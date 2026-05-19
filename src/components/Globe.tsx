@@ -1,4 +1,4 @@
-import { onMount } from "solid-js";
+import { onCleanup, onMount } from "solid-js";
 import * as d3 from "d3";
 import worldData from "../lib/world.json";
 
@@ -23,15 +23,19 @@ const GlobeComponent = () => {
   onMount(() => {
     if (!mapContainer) return;
 
-    // Responsive sizing
-    const containerRect = mapContainer.getBoundingClientRect();
+    const measure = () => {
+      const rect = mapContainer!.getBoundingClientRect();
+      // Fall back to a sensible default if the container is still 0×0 at mount
+      // (e.g. parent flex/grid hasn't laid out yet).
+      const w = rect.width || mapContainer!.clientWidth || 300;
+      const h = rect.height || mapContainer!.clientHeight || w;
+      return { width: Math.max(w, 80), height: Math.max(h, 80) };
+    };
+
+    const { width, height } = measure();
     const isMobile = window.innerWidth <= 768;
-    const width = Math.min(containerRect.width, window.innerWidth - 32);
-    const height = isMobile ? Math.min(width, 400) : Math.min(width * 0.6, 600);
     const sensitivity = isMobile ? 100 : 75;
-    
-    // Scale based on container size
-    const scale = Math.min(width, height) * 0.4;
+    const scale = Math.min(width, height) * 0.45;
 
     let projection = d3
       .geoOrthographic()
@@ -156,49 +160,39 @@ const GlobeComponent = () => {
       });
 
     // Slower, smoother rotation
-    d3.timer(() => {
+    const timer = d3.timer(() => {
       const rotate = projection.rotate();
       const k = sensitivity / projection.scale();
       projection.rotate([rotate[0] - 0.5 * k, rotate[1]]);
       svg.selectAll("path").attr("d", (d: any) => pathGenerator(d as any));
     }, 100);
 
-    // Handle window resize
-    const handleResize = () => {
-      if (!mapContainer) return;
-      
-      const newRect = mapContainer.getBoundingClientRect();
-      const newIsMobile = window.innerWidth <= 768;
-      const newWidth = Math.min(newRect.width, window.innerWidth - 32);
-      const newHeight = newIsMobile ? Math.min(newWidth, 400) : Math.min(newWidth * 0.6, 600);
-      const newScale = Math.min(newWidth, newHeight) * 0.4;
-      
-      projection
-        .scale(newScale)
-        .translate([newWidth / 2, newHeight / 2]);
-      
-      svg
-        .attr("width", newWidth)
-        .attr("height", newHeight);
-      
+    const applySize = (w: number, h: number) => {
+      const newScale = Math.min(w, h) * 0.45;
+      projection.scale(newScale).translate([w / 2, h / 2]);
+      svg.attr("width", w).attr("height", h);
       svg.select("circle")
-        .attr("cx", newWidth / 2)
-        .attr("cy", newHeight / 2)
+        .attr("cx", w / 2)
+        .attr("cy", h / 2)
         .attr("r", newScale);
-      
       svg.selectAll("path").attr("d", (d: any) => pathGenerator(d as any));
     };
-    
-    window.addEventListener("resize", handleResize);
-    
-    // Cleanup on unmount
-    return () => {
-      window.removeEventListener("resize", handleResize);
-    };
+
+    // Re-size when the container itself changes (covers card resize, not just window resize).
+    const ro = new ResizeObserver(() => {
+      const { width: nw, height: nh } = measure();
+      applySize(nw, nh);
+    });
+    ro.observe(mapContainer);
+
+    onCleanup(() => {
+      timer.stop();
+      ro.disconnect();
+    });
   });
 
   return (
-    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; min-height: 400px;">
+    <div style="width: 100%; height: 100%; display: flex; align-items: center; justify-content: center;">
       <div style="width: 100%; height: 100%;" ref={mapContainer}></div>
     </div>
   );
