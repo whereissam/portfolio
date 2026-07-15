@@ -14,9 +14,9 @@ import AstroPWA from '@vite-pwa/astro';
 
 // https://astro.build/config
 export default defineConfig({
-  output: 'server',
+  output: 'static',
   adapter: vercel(),
-  site: "https://portfolio-sam-dev.vercel.app/",
+  site: "https://dev.blockspaces.xyz/",
   integrations: [
     sitemap(),
     // robotsTxt({

@@ -15,9 +15,8 @@ export async function GET(context) {
       pubDate: post.data.pubDate,
       description: post.data.description,
       content: sanitizeHtml(parser.render(post.body)),
-      // Compute RSS link from post `slug`
-      // This example assumes all posts are rendered as `/blog/[slug]` routes
-      link: `/blog/${post.slug}/`,
+      // Compute RSS link from post `id` (glob loader uses `id`, not `slug`)
+      link: `/blog/${post.id}/`,
     })),
   });
 }
